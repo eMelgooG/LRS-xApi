@@ -89,6 +89,15 @@
     <Compile Include="BasicAuthentication\Filters\IdentityBasicAuthenticationAttribute.cs" />
     <Compile Include="BasicAuthentication\Results\AddChallengeOnUnauthorizedResult.cs" />
     <Compile Include="BasicAuthentication\Results\AuthenticationFailureResult.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Data\About.cs" />
+    <Compile Include="Data\asdf.cs" />
+    <Compile Include="Data\Exceptions\ExperienceDataException.cs" />
+    <Compile Include="Data\Exceptions\IriFormatException.cs" />
+    <Compile Include="Data\Exceptions\VersionFormatException.cs" />
+    <Compile Include="Data\ExtensionsDictionary.cs" />
+    <Compile Include="Data\Helpers\ApiHeaders.cs" />
+    <Compile Include="Data\Helpers\ApiVersion.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -105,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>

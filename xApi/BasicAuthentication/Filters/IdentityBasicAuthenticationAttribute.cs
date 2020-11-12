@@ -11,7 +11,7 @@ using System.Web.Http.Filters;
 using xApi.BasicAuthentication.Filters;
 using xApi.BasicAuthentication.Results;
 
-namespace xApi.Filters
+namespace xApi.BasicAuthentication.Filters
 {
     public class IdentityBasicAuthenticationAttribute : Attribute, IAuthenticationFilter
     {

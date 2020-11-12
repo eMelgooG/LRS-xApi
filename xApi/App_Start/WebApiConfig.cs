@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using xApi.Filters;
+using xApi.BasicAuthentication.Filters;
 
 namespace xApi
 {
@@ -16,6 +16,7 @@ namespace xApi
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
 
         }
     }
