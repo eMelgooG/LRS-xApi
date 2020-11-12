@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using xApi.Filters;
 
 namespace xApi
 {
@@ -9,16 +10,13 @@ namespace xApi
     {
         public static void Register(HttpConfiguration config)
         {
+            config.SuppressHostPrincipal();
+            config.Filters.Add(new IdentityBasicAuthenticationAttribute());
             // Web API configuration and services
 
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
         }
     }
 }

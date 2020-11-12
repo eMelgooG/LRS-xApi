@@ -85,6 +85,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BasicAuthentication\Filters\HttpAuthenticationChallengeContextExtensions.cs" />
+    <Compile Include="BasicAuthentication\Filters\IdentityBasicAuthenticationAttribute.cs" />
+    <Compile Include="BasicAuthentication\Results\AddChallengeOnUnauthorizedResult.cs" />
+    <Compile Include="BasicAuthentication\Results\AuthenticationFailureResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
