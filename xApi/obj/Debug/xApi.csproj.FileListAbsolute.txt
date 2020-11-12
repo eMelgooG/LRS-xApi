@@ -132,3 +132,16 @@ D:\C#\connectalrs\xApi\bin\System.Web.Http.xml
 D:\C#\connectalrs\xApi\bin\System.Web.Http.WebHost.xml
 D:\C#\connectalrs\xApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\C#\connectalrs\xApi\obj\Debug\xApi.csproj.CopyComplete
+D:\C#\connectalrs\xApi\bin\Microsoft.Web.Infrastructure.dll
+D:\C#\connectalrs\xApi\bin\System.Web.Helpers.dll
+D:\C#\connectalrs\xApi\bin\System.Web.Mvc.dll
+D:\C#\connectalrs\xApi\bin\System.Web.Razor.dll
+D:\C#\connectalrs\xApi\bin\System.Web.WebPages.Deployment.dll
+D:\C#\connectalrs\xApi\bin\System.Web.WebPages.dll
+D:\C#\connectalrs\xApi\bin\System.Web.WebPages.Razor.dll
+D:\C#\connectalrs\xApi\bin\System.Web.Helpers.xml
+D:\C#\connectalrs\xApi\bin\System.Web.Mvc.xml
+D:\C#\connectalrs\xApi\bin\System.Web.Razor.xml
+D:\C#\connectalrs\xApi\bin\System.Web.WebPages.xml
+D:\C#\connectalrs\xApi\bin\System.Web.WebPages.Deployment.xml
+D:\C#\connectalrs\xApi\bin\System.Web.WebPages.Razor.xml
