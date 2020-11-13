@@ -25,7 +25,7 @@ namespace xApi.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public IHttpActionResult GetActivityProfile(
+        public IHttpActionResult GetProfiles(
              Uri activityId=null,
              string profileId = null,
              DateTimeOffset? since = null)
@@ -33,14 +33,14 @@ namespace xApi.Controllers
             if (activityId == null)
             {
                 return BadRequest("ActivityId parameter needs to be provided.");
-            }
+            } 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             //check to see if profileId was provided
-            if (!string.IsNullOrEmpty(profileId))
+            if (profileId!=null)
             {
                 //needs implementation
                 return Ok("Nice");
@@ -52,5 +52,83 @@ namespace xApi.Controllers
             }
 
         }
+
+       
+
+         /// <summary>
+        /// Stores or changes the specified Profile document in the context of the specified Activity.
+        /// </summary>
+        /// <param name="activityId">The Activity id associated with this Profile document.</param>
+        /// <param name="profileId">The profile id associated with this Profile document.</param>
+        /// <param name="document">The document to be stored or updated.</param>
+        /// <returns>204 No Content</returns>
+        //[HttpPost]
+        //[HttpPut]
+        //public IHttpActionResult SaveProfile(
+        //    string profileId,
+        //    Uri activityId,
+        //    [BindRequired, FromHeader(Name = "Content-Type")] string contentType,
+        //    [BindRequired, FromBody] byte[] body,
+        //    [FromUri] Guid? registration = null)
+        //{
+        //    if (profileId == null)
+        //    {
+        //        return BadRequest("ProfileId parameter needs to be provided.");
+        //    }
+        //    if(activityId==null)
+        //    {
+        //        return BadRequest("ActivityId parameter needs to be provided.");
+        //    }
+        //    if()
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var profile = await _mediator.Send(new GetActivityProfileQuery()
+        //    {
+        //        ActivityId = activityId,
+        //        ProfileId = profileId,
+        //        Registration = registration
+        //    }, cancellationToken);
+
+        //    if (Request.TryConcurrencyCheck(profile?.Document.Checksum, profile?.Document.LastModified, out int statusCode))
+        //    {
+        //        return StatusCode(statusCode);
+        //    }
+
+        //    if (profile != null)
+        //    {
+        //        // Optimistic Concurrency
+        //        if (HttpMethods.IsPut(Request.Method))
+        //        {
+        //            return Conflict();
+        //        }
+
+        //        await _mediator.Send(new UpdateActivityProfileCommand()
+        //        {
+
+        //            ProfileId = profileId,
+        //            ActivityId = activityId,
+        //            Content = body,
+        //            ContentType = contentType,
+        //            Registration = registration
+        //        }, cancellationToken);
+        //    }
+        //    else
+        //    {
+        //        await _mediator.Send(new CreateActivityProfileCommand()
+        //        {
+        //            ProfileId = profileId,
+        //            ActivityId = activityId,
+        //            Content = body,
+        //            ContentType = contentType,
+        //            Registration = registration
+        //        }, cancellationToken);
+        //    }
+
+        //    return NoContent();
+        //}
     }
 }

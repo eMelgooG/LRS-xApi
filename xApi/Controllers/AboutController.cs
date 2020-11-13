@@ -9,6 +9,7 @@ using xApi.Filters;
 
 namespace xApi.Controllers
 {
+    [RequiredContentTypeHeader]
     [AllowAnonymous]
     [Route("xapi/about")]
     public class AboutController : ApiController

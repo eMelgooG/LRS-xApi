@@ -120,6 +120,7 @@
     <Compile Include="Data\ExtensionsDictionary.cs" />
     <Compile Include="Data\Helpers\ApiHeaders.cs" />
     <Compile Include="Data\Helpers\ApiVersion.cs" />
+    <Compile Include="Filters\RequiredContentTypeHeaderAttribute.cs" />
     <Compile Include="Filters\RequiredVersionHeaderAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
