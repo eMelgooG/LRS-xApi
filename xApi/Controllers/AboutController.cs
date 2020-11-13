@@ -10,7 +10,6 @@ using xApi.Filters;
 namespace xApi.Controllers
 {
     [AllowAnonymous]
-    [RequiredVersionHeader]
     [Route("xapi/about")]
     public class AboutController : ApiController
     {

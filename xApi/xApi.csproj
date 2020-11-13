@@ -111,6 +111,8 @@
     <Compile Include="BasicAuthentication\Results\AddChallengeOnUnauthorizedResult.cs" />
     <Compile Include="BasicAuthentication\Results\AuthenticationFailureResult.cs" />
     <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\ActivityProfileController.cs" />
+    <Compile Include="Controllers\XapiBaseController.cs" />
     <Compile Include="Data\About.cs" />
     <Compile Include="Data\Exceptions\ExperienceDataException.cs" />
     <Compile Include="Data\Exceptions\IriFormatException.cs" />
