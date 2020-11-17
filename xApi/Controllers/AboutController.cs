@@ -17,7 +17,6 @@ namespace xApi.Controllers
         [HttpGet]   
         public IHttpActionResult GetAbout()
         {
-   
             var about = About.Instance;
             return Ok(about);
         }

@@ -105,6 +105,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repositories\ActivityProfileRepository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BasicAuthentication\Filters\HttpAuthenticationChallengeContextExtensions.cs" />
     <Compile Include="BasicAuthentication\Filters\IdentityBasicAuthenticationAttribute.cs" />
@@ -114,12 +115,17 @@
     <Compile Include="Controllers\ActivityProfileController.cs" />
     <Compile Include="Controllers\XapiBaseController.cs" />
     <Compile Include="Data\About.cs" />
+    <Compile Include="Data\Documents\ActivityProfileDocument.cs" />
+    <Compile Include="Data\Documents\Document.cs" />
     <Compile Include="Data\Exceptions\ExperienceDataException.cs" />
     <Compile Include="Data\Exceptions\IriFormatException.cs" />
     <Compile Include="Data\Exceptions\VersionFormatException.cs" />
     <Compile Include="Data\ExtensionsDictionary.cs" />
     <Compile Include="Data\Helpers\ApiHeaders.cs" />
     <Compile Include="Data\Helpers\ApiVersion.cs" />
+    <Compile Include="Filters\RawBody\EmptyTask.cs" />
+    <Compile Include="Filters\RawBody\RawBodyAttribute.cs" />
+    <Compile Include="Filters\RawBody\RawBodyParameterBinding.cs" />
     <Compile Include="Filters\RequiredContentTypeHeaderAttribute.cs" />
     <Compile Include="Filters\RequiredVersionHeaderAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -138,7 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

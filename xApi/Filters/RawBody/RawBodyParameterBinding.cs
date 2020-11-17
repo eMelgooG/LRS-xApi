@@ -22,7 +22,7 @@ namespace xApi.Filters.RawBody
         public RawBodyParameterBinding(HttpParameterDescriptor descriptor)
             : base(descriptor)
         {
-
+         
         }
 
 

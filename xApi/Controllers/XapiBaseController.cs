@@ -9,8 +9,8 @@ using xApi.Filters;
 
 namespace xApi.Controllers
 {
-    [RequiredVersionHeader]
-    [Authorize]
+    //[RequiredVersionHeader]
+    //[Authorize]
     public class XapiBaseController : ApiController
     {
 
