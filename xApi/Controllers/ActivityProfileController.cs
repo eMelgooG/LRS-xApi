@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.ModelBinding;
 using xApi.Data.Documents;
+using xApi.Data.Results;
 using xApi.Filters;
 using xApi.Filters.RawBody;
 using xApi.Repositories;
@@ -52,17 +54,13 @@ namespace xApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (profileId != null) { 
+            if (profileId != null) {
                 ActivityProfileDocument profile = activityProfileRepository.GetProfile(activityId, profileId);
-            if (profile == null)
+                if (profile == null)
                 {
                     return NotFound();
-                }         
-                    var response = new HttpResponseMessage(HttpStatusCode.OK);
-                    response.Content = new ByteArrayContent(profile.Content);
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue(profile.ContentType);
-                    return Ok(response);
-                
+                }
+                return new ActivityProfileResult(profile);
             }
 
             // otherwise we return the array of profileId's associated with that activity
@@ -70,6 +68,7 @@ namespace xApi.Controllers
             return Ok();
 
         }
+    
 
         /// <summary>
         /// Stores or changes the specified Profile document in the context of the specified Activity.
@@ -88,36 +87,35 @@ namespace xApi.Controllers
         {
             if (profileId == null)
             {
-                return BadRequest("ProfileId parameter needs to be provided.");
+                return BadRequest("profileid parameter needs to be provided.");
             }
-            if(activityId==null)
+            if (activityId == null)
             {
-                return BadRequest("ActivityId parameter needs to be provided.");
+                return BadRequest("activityid parameter needs to be provided.");
             }
-            if(body==null)
+            if (body == null)
             {
-                return BadRequest("Content needs to be provided in body.");
+                return BadRequest("content needs to be provided in body.");
             }
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var contentType = this.Request.Content.Headers.GetValues(RequiredContentTypeHeaderAttribute.CONTENT_TYPE).First();
 
-            //connect to db and check if the profile already exists. Create it or if the profile already exists try to merge.
-
-            ActivityProfileDocument document = new ActivityProfileDocument
+            var contenttype = this.Request.Content.Headers.GetValues(RequiredContentTypeHeaderAttribute.CONTENT_TYPE).First();
+            //  connect to db and check if the profile already exists.create it or if the profile already exists try to merge.
+            ActivityProfileDocument document = new ActivityProfileDocument()
             {
                 ActivityId = activityId,
                 ProfileId = profileId,
                 Registration = registration,
-                Content = (byte[])body,
-                ContentType = contentType
+                Content = body,
+                ContentType = contenttype
             };
 
             return Ok();
-        }
+            }
     }
 }
 
