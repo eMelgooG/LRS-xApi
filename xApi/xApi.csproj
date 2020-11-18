@@ -105,6 +105,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Documents\IDocument.cs" />
+    <Compile Include="Data\Helpers\Helpers.cs" />
     <Compile Include="Data\Results\ActivityProfileResult.cs" />
     <Compile Include="Repositories\ActivityProfileRepository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

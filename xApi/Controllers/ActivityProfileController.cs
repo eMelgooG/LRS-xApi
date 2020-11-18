@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.ModelBinding;
 using xApi.Data.Documents;
+using xApi.Data.Helpers;
 using xApi.Data.Results;
 using xApi.Filters;
 using xApi.Filters.RawBody;
@@ -65,7 +67,7 @@ namespace xApi.Controllers
 
             // otherwise we return the array of profileId's associated with that activity
             string[] profiles = activityProfileRepository.GetProfiles(activityId);
-            return Ok();
+            return Ok(profiles);
 
         }
     
@@ -85,6 +87,7 @@ namespace xApi.Controllers
            [FromUri] Uri activityId=null,
             [FromUri] Guid? registration = null)
         {
+       
             if (profileId == null)
             {
                 return BadRequest("profileid parameter needs to be provided.");

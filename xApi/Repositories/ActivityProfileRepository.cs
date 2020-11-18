@@ -8,7 +8,15 @@ namespace xApi.Repositories
 {
     public class ActivityProfileRepository
     {
-
+        /*     string jsonStr = "{\r\n    \"name\": \"13d2dfc9-04cf-44f9-832-f53c04c6dcfe\",\r\n    \"location\": {\r\n                \"name\": \"5b6f1721-b9-4bc1-8ec5-87363da5be38\"\r\n    },\r\n    \"2e0618a7-c1d9-43f5-b9ed-201c6f1d08a5\": \"aed267b8-93ba-42e3-bffc-a20a3151d7a0\"\r\n}";
+        Dictionary<String,Object> dic = JsonConvert.DeserializeObject<Dictionary<String, Object>>(jsonStr);
+            Dictionary<String, Object> dic2 = Helpers.parseJsonByteArrayToDictionary(body);
+            foreach (KeyValuePair<string, object> entry in dic2)
+            {
+                bool x = dic.ContainsKey(entry.Key);
+                bool y = dic[entry.Key].ToString().Equals(dic2[entry.Key].ToString()) ? true : false;
+                int z = 1;
+            }*/
         public ActivityProfileRepository()
         {
       
