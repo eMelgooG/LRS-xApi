@@ -27,6 +27,8 @@ namespace xApi.Data.Results
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             response.Content = new ByteArrayContent(_profile.Content);
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(_profile.ContentType);
+            response.Content.Headers.LastModified = _profile.LastModified;
+            response.Content.Headers.Add("ETag", $"'{_profile.Tag}'");
             return Task.FromResult(response);
         }
     }

@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.ModelBinding;
+using xApi.Data;
 using xApi.Data.Documents;
 using xApi.Data.Helpers;
 using xApi.Data.Results;
@@ -66,8 +67,12 @@ namespace xApi.Controllers
             }
 
             // otherwise we return the array of profileId's associated with that activity
-            string[] profiles = activityProfileRepository.GetProfiles(activityId);
-            return Ok(profiles);
+            Object[] profiles = activityProfileRepository.GetProfiles(activityId, since);
+            if (profiles == null)
+            {
+                return Ok(new string[0]);
+            }
+            return new ActivityProfilesResult(profiles);
 
         }
     
@@ -79,9 +84,8 @@ namespace xApi.Controllers
         /// <param name="profileId">The profile id associated with this Profile document.</param>
         /// <param name="document">The document to be stored or updated.</param>
         /// <returns>204 No Content</returns>
-        [HttpPost]
-        [HttpPut]
-        public IHttpActionResult SaveProfile(
+       [HttpPost]
+        public IHttpActionResult PostProfile(
             [RawBody] byte[] body,
            [FromUri] string profileId=null,
            [FromUri] Uri activityId=null,
@@ -108,7 +112,9 @@ namespace xApi.Controllers
 
             var contenttype = this.Request.Content.Headers.GetValues(RequiredContentTypeHeaderAttribute.CONTENT_TYPE).First();
             //  connect to db and check if the profile already exists.create it or if the profile already exists try to merge.
-            ActivityProfileDocument document = new ActivityProfileDocument()
+
+
+            ActivityProfileDocument newDocument = new ActivityProfileDocument()
             {
                 ActivityId = activityId,
                 ProfileId = profileId,
@@ -116,9 +122,22 @@ namespace xApi.Controllers
                 Content = body,
                 ContentType = contenttype
             };
+            var oldDocument = activityProfileRepository.GetProfile(activityId, profileId);
+            if (oldDocument != null)
+            {
+                if(!(oldDocument.ContentType.Equals(Constants.CONTENT_JSON) && oldDocument.ContentType.Equals(newDocument.ContentType)))
+                {
+                    return BadRequest("Invalid content-type for the profileId");
+                }
 
-            return Ok();
+                activityProfileRepository.mergeProfiles(newDocument, oldDocument);
+                return StatusCode(HttpStatusCode.NoContent);
             }
+
+            //else we have to save it
+            activityProfileRepository.saveProfile(newDocument);
+       return StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }
 
