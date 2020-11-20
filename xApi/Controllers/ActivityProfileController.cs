@@ -72,6 +72,7 @@ namespace xApi.Controllers
             {
                 return Ok(new string[0]);
             }
+      
             return new ActivityProfilesResult(profiles);
 
         }
@@ -85,56 +86,86 @@ namespace xApi.Controllers
         /// <param name="document">The document to be stored or updated.</param>
         /// <returns>204 No Content</returns>
        [HttpPost]
-        public IHttpActionResult PostProfile(
+       [HttpPut]
+        public IHttpActionResult SaveProfile(
             [RawBody] byte[] body,
+            [FromUri] Uri activityId=null,
            [FromUri] string profileId=null,
-           [FromUri] Uri activityId=null,
             [FromUri] Guid? registration = null)
         {
-       
+            if(activityId==null)
+            {
+                return BadRequest("Missing parameter activityId");
+            }
             if (profileId == null)
             {
-                return BadRequest("profileid parameter needs to be provided.");
+                return BadRequest("Missing parameter activityId");
             }
-            if (activityId == null)
-            {
-                return BadRequest("activityid parameter needs to be provided.");
-            }
-            if (body == null)
-            {
-                return BadRequest("content needs to be provided in body.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var contenttype = this.Request.Content.Headers.GetValues(RequiredContentTypeHeaderAttribute.CONTENT_TYPE).First();
+            string contenttype = null;
+            if (this.Request.Content.Headers.Contains(RequiredContentTypeHeaderAttribute.CONTENT_TYPE))
+            {
+                 contenttype = this.Request.Content.Headers.GetValues(RequiredContentTypeHeaderAttribute.CONTENT_TYPE).First();
+            }
+
             //  connect to db and check if the profile already exists.create it or if the profile already exists try to merge.
 
 
-            ActivityProfileDocument newDocument = new ActivityProfileDocument()
+            ActivityProfileDocument newDocument = new ActivityProfileDocument(body,contenttype)
             {
                 ActivityId = activityId,
                 ProfileId = profileId,
-                Registration = registration,
-                Content = body,
-                ContentType = contenttype
+                Registration = registration
             };
+
             var oldDocument = activityProfileRepository.GetProfile(activityId, profileId);
+
             if (oldDocument != null)
             {
-                if(!(oldDocument.ContentType.Equals(Constants.CONTENT_JSON) && oldDocument.ContentType.Equals(newDocument.ContentType)))
+                /*  If method is Post -> merge documents:
+                 *  1. check if both have the content type app/json
+                 *  2. check for valid ETag
+                 *  3. Try to merge
+                 *  4. Return No Content
+                 */
+                if (this.Request.Method.Equals(HttpMethod.Post))
                 {
-                    return BadRequest("Invalid content-type for the profileId");
+                    if (!(oldDocument.ContentType.Equals(Constants.CONTENT_JSON) && oldDocument.ContentType.Equals(newDocument.ContentType)))
+                    {
+                        return BadRequest("Couldn't merge. The content-type needs to be application/json for both documents to be merged");
+                    }
+
+                    if (this.ActionContext.TryConcurrencyCheck(oldDocument.Checksum, oldDocument.LastModified, out HttpStatusCode statusCode))
+                    {
+                        return StatusCode(statusCode);
+                    }
+
+                    activityProfileRepository.mergeProfiles(newDocument, oldDocument);
+
+                    return StatusCode(HttpStatusCode.NoContent);
                 }
 
-                activityProfileRepository.mergeProfiles(newDocument, oldDocument);
-                return StatusCode(HttpStatusCode.NoContent);
+                /* If method is Put, replace the whole document
+                 * 1. Check for ETag, return Conflict if it's not present or 415 if it doesn't match
+                 */
+                else if (this.Request.Method.Equals(HttpMethod.Put))
+                {
+                    if (this.ActionContext.TryConcurrencyCheck(oldDocument.Checksum, oldDocument.LastModified, out HttpStatusCode statusCode))
+                    {
+                        if (statusCode == HttpStatusCode.Conflict)
+                        {
+                            return Content(statusCode, $"-> check the current state of the resource.set the \"If - Match\" \n->header with the current ETag to resolve the conflict.");
+                        }
+                        return StatusCode(statusCode);
+                    }
+                }
             }
 
-            //else we have to save it
+            //create or overwrite
             activityProfileRepository.saveProfile(newDocument);
        return StatusCode(HttpStatusCode.NoContent);
         }

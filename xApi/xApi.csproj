@@ -110,6 +110,7 @@
     <Compile Include="Data\Helpers\Helpers.cs" />
     <Compile Include="Data\Results\ActivityProfileResult.cs" />
     <Compile Include="Data\Results\ActivityProfilesResult.cs" />
+    <Compile Include="Filters\HttpRequestExtensions.cs" />
     <Compile Include="Repositories\ActivityProfileRepository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BasicAuthentication\Filters\HttpAuthenticationChallengeContextExtensions.cs" />
