@@ -169,6 +169,33 @@ namespace xApi.Controllers
             activityProfileRepository.saveProfile(newDocument);
        return StatusCode(HttpStatusCode.NoContent);
         }
+
+        [HttpDelete]
+        public IHttpActionResult DeleteProfile(
+            Uri activityId = null,
+            string profileId = null)
+        {
+            if (activityId == null)
+            {
+                return BadRequest("ActivityId parameter needs to be provided.");
+            }
+            if (profileId == null)
+            {
+                return BadRequest("ProfileId parameter needs to be provided.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+                ActivityProfileDocument profile = activityProfileRepository.GetProfile(activityId, profileId);
+                if (profile == null)
+                {
+                    return NotFound();
+                }
+            activityProfileRepository.DeleteProfile(profile);
+            
+            }
     }
 }
 

@@ -50,5 +50,10 @@ int z = 1;
         {
 
         }
+
+        internal void DeleteProfile(ActivityProfileDocument profile)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
