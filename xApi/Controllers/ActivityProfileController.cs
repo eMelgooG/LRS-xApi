@@ -90,8 +90,7 @@ namespace xApi.Controllers
         public IHttpActionResult SaveProfile(
             [RawBody] byte[] body,
             [FromUri] Uri activityId=null,
-           [FromUri] string profileId=null,
-            [FromUri] Guid? registration = null)
+           [FromUri] string profileId=null)
         {
             if(activityId==null)
             {
@@ -118,8 +117,7 @@ namespace xApi.Controllers
             ActivityProfileDocument newDocument = new ActivityProfileDocument(body,contenttype)
             {
                 ActivityId = activityId,
-                ProfileId = profileId,
-                Registration = registration
+                ProfileId = profileId
             };
 
             var oldDocument = activityProfileRepository.GetProfile(activityId, profileId);
@@ -192,10 +190,15 @@ namespace xApi.Controllers
                 if (profile == null)
                 {
                     return NotFound();
+                } else
+            {
+                if(this.ActionContext.TryConcurrencyCheck(profile.Checksum,profile.LastModified, out var statusCode)) {
+                    return StatusCode(statusCode);
                 }
-            activityProfileRepository.DeleteProfile(profile);
-            
             }
+            activityProfileRepository.DeleteProfile(profile);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }
 
