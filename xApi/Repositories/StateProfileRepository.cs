@@ -37,7 +37,12 @@ namespace xApi.Repositories
 
         public void DeleteProfile(StateProfileDocument profile)
         {
+
             throw new NotImplementedException();
+        }
+        public void DeleteProfiles(StateProfileDocument profile, DateTimeOffset? since)
+        {
+
         }
 
     }

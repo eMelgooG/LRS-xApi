@@ -131,7 +131,51 @@ namespace xApi.Controllers
             stateProfileRepository.saveProfile(newDocument);
             return StatusCode(HttpStatusCode.NoContent);
         }
-    }
 
+        [HttpDelete]
+        public IHttpActionResult DeleteProfile(
+           [FromUri] Uri activityId,
+           [FromUri] Agent agent = null,
+          [FromUri] string stateId = null,
+           [FromUri] Guid? registration = null,
+           DateTimeOffset? since = null)
+        {
+            if (agent == null)
+            {
+                return BadRequest("Agent parameter needs to be provided.");
+            }
+            if (activityId == null)
+            {
+                return BadRequest("ProfileId parameter needs to be provided.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var profile = new StateProfileDocument()
+            {
+                Activity = activityId,
+                Agent = agent,
+                StateId = stateId,
+                Registration = registration
+            };
+
+            //delete single document
+            if (stateId != null)
+            {
+                profile = stateProfileRepository.GetProfile(profile);
+                if (profile == null)
+                {
+                    return NotFound();
+                }
+                stateProfileRepository.DeleteProfile(profile);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            
+            //delete multiple documents
+            stateProfileRepository.DeleteProfiles(profile,since);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+    }
 }
 
