@@ -105,9 +105,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Account.cs" />
+    <Compile Include="Data\Agent.cs" />
     <Compile Include="Data\Constants.cs" />
     <Compile Include="Data\Documents\IDocument.cs" />
+    <Compile Include="Data\Exceptions\MboxFormatException.cs" />
     <Compile Include="Data\Helpers\Helpers.cs" />
+    <Compile Include="Data\Mbox.cs" />
     <Compile Include="Data\Results\ActivityProfileResult.cs" />
     <Compile Include="Data\Results\ActivityProfilesResult.cs" />
     <Compile Include="Filters\HttpRequestExtensions.cs" />
