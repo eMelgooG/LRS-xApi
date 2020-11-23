@@ -106,11 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AgentProfileController.cs" />
+    <Compile Include="Controllers\StateProfileController.cs" />
     <Compile Include="Data\Account.cs" />
     <Compile Include="Data\Agent.cs" />
     <Compile Include="Data\Documents\AgentProfileDocument.cs" />
     <Compile Include="Data\Constants.cs" />
     <Compile Include="Data\Documents\IDocument.cs" />
+    <Compile Include="Data\Documents\StateProfileDocument.cs" />
     <Compile Include="Data\Exceptions\MboxFormatException.cs" />
     <Compile Include="Data\Helpers\Helpers.cs" />
     <Compile Include="Data\Mbox.cs" />
@@ -145,6 +147,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AgentProfileRepository.cs" />
+    <Compile Include="Repositories\StateActivityRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

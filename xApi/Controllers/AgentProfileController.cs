@@ -87,7 +87,7 @@ namespace xApi.Controllers
                 contenttype = this.Request.Content.Headers.GetValues(RequiredContentTypeHeaderAttribute.CONTENT_TYPE).First();
             }
 
-            //  connect to db and check if the profile already exists.create it or if the profile already exists try to merge.
+            //  connect to db and check if the profile already exists. Create it or if the profile exists try to merge.
 
 
             AgentProfileDocument newDocument = new AgentProfileDocument(body, contenttype)
