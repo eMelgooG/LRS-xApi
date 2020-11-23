@@ -145,3 +145,11 @@ D:\C#\connectalrs\xApi\bin\System.Web.Razor.xml
 D:\C#\connectalrs\xApi\bin\System.Web.WebPages.xml
 D:\C#\connectalrs\xApi\bin\System.Web.WebPages.Deployment.xml
 D:\C#\connectalrs\xApi\bin\System.Web.WebPages.Razor.xml
+D:\C#\connectalrs\xApi\bin\System.Buffers.dll
+D:\C#\connectalrs\xApi\bin\System.Memory.dll
+D:\C#\connectalrs\xApi\bin\System.Numerics.Vectors.dll
+D:\C#\connectalrs\xApi\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\C#\connectalrs\xApi\bin\System.Buffers.xml
+D:\C#\connectalrs\xApi\bin\System.Memory.xml
+D:\C#\connectalrs\xApi\bin\System.Numerics.Vectors.xml
+D:\C#\connectalrs\xApi\bin\System.Runtime.CompilerServices.Unsafe.xml
