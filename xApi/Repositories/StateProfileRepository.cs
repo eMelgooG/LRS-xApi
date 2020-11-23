@@ -6,9 +6,9 @@ using xApi.Data.Documents;
 
 namespace xApi.Repositories
 {
-    public class StateActivityRepository
+    public class StateProfileRepository
     {
-        public StateActivityRepository()
+        public StateProfileRepository()
         {
         }
 
@@ -24,6 +24,20 @@ namespace xApi.Repositories
             result[0] = new List<String>() { "bla" };
             result[1] = DateTimeOffset.UtcNow;
             return result;
+        }
+
+        public void saveProfile(StateProfileDocument document)
+        {
+
+        }
+        public void mergeProfiles(StateProfileDocument newDocument, StateProfileDocument oldDocument)
+        {
+
+        }
+
+        public void DeleteProfile(StateProfileDocument profile)
+        {
+            throw new NotImplementedException();
         }
 
     }

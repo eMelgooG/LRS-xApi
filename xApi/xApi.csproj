@@ -147,7 +147,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AgentProfileRepository.cs" />
-    <Compile Include="Repositories\StateActivityRepository.cs" />
+    <Compile Include="Repositories\StateProfileRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
