@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Data\Account.cs" />
     <Compile Include="Data\Agent.cs" />
+    <Compile Include="Data\Documents\AgentProfileDocument.cs" />
     <Compile Include="Data\Constants.cs" />
     <Compile Include="Data\Documents\IDocument.cs" />
     <Compile Include="Data\Exceptions\MboxFormatException.cs" />
