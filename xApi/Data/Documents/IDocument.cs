@@ -12,5 +12,6 @@ namespace xApi.Data.Documents
         string Checksum { get; set; }
         DateTimeOffset? LastModified { get; set; }
         DateTimeOffset CreateDate { get; set; }
+        string Tag { get; set; }
     }
 }

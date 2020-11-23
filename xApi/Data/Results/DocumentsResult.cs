@@ -11,10 +11,10 @@ using System.Web.Http;
 
 namespace xApi.Data.Results
 {
-    public class ActivityProfilesResult : IHttpActionResult
+    public class DocumentsResult : IHttpActionResult
     {
         Object[]_profiles = null;
-        public ActivityProfilesResult(Object[] profiles)
+        public DocumentsResult(Object[] profiles)
         {
 
             _profiles = profiles;

@@ -12,10 +12,10 @@ using xApi.Data.Documents;
 
 namespace xApi.Data.Results
 {
-    public class ActivityProfileResult : IHttpActionResult
+    public class DocumentResult : IHttpActionResult
     {
-        ActivityProfileDocument _profile = null;
-        public ActivityProfileResult(ActivityProfileDocument profile)
+        IDocument _profile = null;
+        public DocumentResult(IDocument profile)
         {
             if (profile == null)
                 throw new ArgumentNullException(nameof(profile));

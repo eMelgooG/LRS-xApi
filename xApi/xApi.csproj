@@ -105,6 +105,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AgentProfileController.cs" />
     <Compile Include="Data\Account.cs" />
     <Compile Include="Data\Agent.cs" />
     <Compile Include="Data\Documents\AgentProfileDocument.cs" />
@@ -113,8 +114,8 @@
     <Compile Include="Data\Exceptions\MboxFormatException.cs" />
     <Compile Include="Data\Helpers\Helpers.cs" />
     <Compile Include="Data\Mbox.cs" />
-    <Compile Include="Data\Results\ActivityProfileResult.cs" />
-    <Compile Include="Data\Results\ActivityProfilesResult.cs" />
+    <Compile Include="Data\Results\DocumentResult.cs" />
+    <Compile Include="Data\Results\DocumentsResult.cs" />
     <Compile Include="Filters\HttpRequestExtensions.cs" />
     <Compile Include="Repositories\ActivityProfileRepository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
