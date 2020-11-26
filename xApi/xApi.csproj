@@ -124,6 +124,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiUtils\Binders\AgentModelBinder.cs" />
+    <Compile Include="ApiUtils\Binders\IriModelBinder.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\AgentProfileController.cs" />
     <Compile Include="Controllers\StateProfileController.cs" />

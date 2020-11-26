@@ -24,8 +24,8 @@ namespace xApi.Controllers
 
         [HttpGet]
         public IHttpActionResult GetState(
-            [FromUri] Uri activityId = null,
-           [FromUri] Agent agent = null,
+            Iri activityId = null,
+           Agent agent = null,
            [FromUri] string stateId = null,
            Guid? registration = null,
             DateTimeOffset? since = null)
@@ -68,8 +68,8 @@ namespace xApi.Controllers
         [HttpPut]
         public IHttpActionResult SaveProfile(
            [RawBody] byte[] body,
-           [FromUri] Uri activityId,
-           [FromUri] Agent agent = null,
+            Iri activityId = null,
+            Agent agent = null,
           [FromUri] string stateId = null,
            [FromUri] Guid? registration = null)
         {
@@ -134,8 +134,8 @@ namespace xApi.Controllers
 
         [HttpDelete]
         public IHttpActionResult DeleteProfile(
-           [FromUri] Uri activityId,
-           [FromUri] Agent agent = null,
+            Iri activityId = null,
+            Agent agent = null,
           [FromUri] string stateId = null,
            [FromUri] Guid? registration = null,
            DateTimeOffset? since = null)

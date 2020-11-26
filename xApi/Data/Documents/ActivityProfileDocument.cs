@@ -13,7 +13,7 @@ namespace xApi.Data.Documents
         public ActivityProfileDocument() { }
 
         public int Id { get; set; }
-        public Uri ActivityId { get; set; }
+        public Iri ActivityId { get; set; }
 
         public string ProfileId { get; set; }
 

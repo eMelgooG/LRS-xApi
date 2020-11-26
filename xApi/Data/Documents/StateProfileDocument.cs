@@ -14,7 +14,7 @@ namespace xApi.Data.Documents
         {
         }
         public string StateId { get; set; }
-        public Uri Activity { get; set; }
+        public Iri Activity { get; set; }
         public Agent Agent { get; set; }
         public Guid? Registration { get; set; }
     }

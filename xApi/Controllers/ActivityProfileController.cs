@@ -44,25 +44,18 @@ namespace xApi.Controllers
 
         [HttpGet]
         public IHttpActionResult GetProfiles(
-             Uri activityId = null,
+             Iri activityId = null,
              string profileId = null,
              DateTimeOffset? since = null)
         {
-            if (activityId == null)
-            {
-                return BadRequest("ActivityId parameter needs to be provided.");
-            }
-            string s = @"fqweqwewq";
-            try
-            {
-                var x = new Uri(s);
-            } catch(UriFormatException ex)
-            {
-                return BadRequest(ex.ToString());
-            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (activityId == null)
+            {
+                return BadRequest("ActivityId parameter needs to be provided.");
             }
 
             if (profileId != null) {
@@ -97,7 +90,7 @@ namespace xApi.Controllers
        [HttpPut]
         public IHttpActionResult SaveProfile(
             [RawBody] byte[] body,
-            [FromUri] Uri activityId=null,
+            [FromUri] Iri activityId=null,
            [FromUri] string profileId=null)
         {
             if(activityId==null)
@@ -178,7 +171,7 @@ namespace xApi.Controllers
 
         [HttpDelete]
         public IHttpActionResult DeleteProfile(
-            Uri activityId = null,
+            Iri activityId = null,
             string profileId = null)
         {
             if (activityId == null)

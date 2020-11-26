@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http.Controllers;
+using xApi.Data;
 using xApi.Data.Documents;
 
 namespace xApi.Repositories
@@ -27,13 +28,13 @@ int z = 1;
         }
 
 
-        public ActivityProfileDocument GetProfile(Uri activityId, string profileId)
+        public ActivityProfileDocument GetProfile(Iri activityId, string profileId)
         {
             if (profileId == null) return null;
             return new ActivityProfileDocument();
         }
 
-        public Object[] GetProfiles(Uri activityId, DateTimeOffset? since)
+        public Object[] GetProfiles(Iri activityId, DateTimeOffset? since)
         {
             var result = new Object[2];
             result[0] = new List<String>() { "bla" };
