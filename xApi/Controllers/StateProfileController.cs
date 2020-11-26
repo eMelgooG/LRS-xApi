@@ -7,8 +7,8 @@ using System.Web.Http;
 using xApi.Data;
 using xApi.Data.Documents;
 using xApi.Data.Results;
-using xApi.Filters;
-using xApi.Filters.RawBody;
+using xApi.ApiUtils.Filters;
+using xApi.ApiUtils.Binders.RawBody;
 using xApi.Repositories;
 
 namespace xApi.Controllers

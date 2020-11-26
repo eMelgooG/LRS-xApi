@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Metadata;
 
-namespace xApi.Filters.RawBody
+namespace xApi.ApiUtils.Binders.RawBody
 {
     /// <summary>
     /// Reads the Request body into a string/byte[] and

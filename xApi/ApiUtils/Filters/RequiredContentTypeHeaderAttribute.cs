@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace xApi.Filters
+namespace xApi.ApiUtils.Filters
 {
     public class RequiredContentTypeHeaderAttribute : ActionFilterAttribute
     {

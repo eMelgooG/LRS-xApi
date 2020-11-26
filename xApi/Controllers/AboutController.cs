@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using xApi.Data;
-using xApi.Filters;
+using xApi.ApiUtils.Filters;
 
 namespace xApi.Controllers
 {

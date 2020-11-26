@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http.Controllers;
 
-namespace xApi.Filters
+namespace xApi.ApiUtils.Filters
 {
     public static class HttpRequestExtensions
     {

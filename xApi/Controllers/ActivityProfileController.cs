@@ -16,8 +16,8 @@ using xApi.Data;
 using xApi.Data.Documents;
 using xApi.Data.Helpers;
 using xApi.Data.Results;
-using xApi.Filters;
-using xApi.Filters.RawBody;
+using xApi.ApiUtils.Filters;
+using xApi.ApiUtils.Binders.RawBody;
 using xApi.Repositories;
 
 namespace xApi.Controllers
@@ -26,7 +26,7 @@ namespace xApi.Controllers
     /// <param name="profileId"></param>
     /// <returns>200 OK, the Profile document</returns>
     [Route("xapi/activities/profile")]
-    public class ActivityProfileController : XapiBaseController
+    public class ActivityProfileController : ApiController
     {
         private ActivityProfileRepository activityProfileRepository;
         public ActivityProfileController()
@@ -51,6 +51,14 @@ namespace xApi.Controllers
             if (activityId == null)
             {
                 return BadRequest("ActivityId parameter needs to be provided.");
+            }
+            string s = @"fqweqwewq";
+            try
+            {
+                var x = new Uri(s);
+            } catch(UriFormatException ex)
+            {
+                return BadRequest(ex.ToString());
             }
             if (!ModelState.IsValid)
             {

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
-namespace xApi.Filters.RawBody
+namespace xApi.ApiUtils.Binders.RawBody
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
     public sealed class RawBodyAttribute : ParameterBindingAttribute

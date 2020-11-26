@@ -137,12 +137,14 @@
     <Compile Include="Data\Documents\StateProfileDocument.cs" />
     <Compile Include="Data\Exceptions\MboxFormatException.cs" />
     <Compile Include="Data\Helpers\Helpers.cs" />
+    <Compile Include="Data\Iri.cs" />
     <Compile Include="Data\LanguageMap.cs" />
     <Compile Include="Data\Mbox.cs" />
     <Compile Include="Data\ResultFormat.cs" />
     <Compile Include="Data\Results\DocumentResult.cs" />
     <Compile Include="Data\Results\DocumentsResult.cs" />
-    <Compile Include="Filters\HttpRequestExtensions.cs" />
+    <Compile Include="Data\SHAHelper.cs" />
+    <Compile Include="ApiUtils\Filters\HttpRequestExtensions.cs" />
     <Compile Include="Repositories\ActivityProfileRepository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BasicAuthentication\Filters\HttpAuthenticationChallengeContextExtensions.cs" />
@@ -161,11 +163,11 @@
     <Compile Include="Data\ExtensionsDictionary.cs" />
     <Compile Include="Data\Helpers\ApiHeaders.cs" />
     <Compile Include="Data\Helpers\ApiVersion.cs" />
-    <Compile Include="Filters\RawBody\EmptyTask.cs" />
-    <Compile Include="Filters\RawBody\RawBodyAttribute.cs" />
-    <Compile Include="Filters\RawBody\RawBodyParameterBinding.cs" />
-    <Compile Include="Filters\RequiredContentTypeHeaderAttribute.cs" />
-    <Compile Include="Filters\RequiredVersionHeaderAttribute.cs" />
+    <Compile Include="ApiUtils\Binders\RawBody\EmptyTask.cs" />
+    <Compile Include="ApiUtils\Binders\RawBody\RawBodyAttribute.cs" />
+    <Compile Include="ApiUtils\Binders\RawBody\RawBodyParameterBinding.cs" />
+    <Compile Include="ApiUtils\Filters\RequiredContentTypeHeaderAttribute.cs" />
+    <Compile Include="ApiUtils\Filters\RequiredVersionHeaderAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

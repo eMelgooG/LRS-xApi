@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace xApi.Filters.RawBody
+namespace xApi.ApiUtils.Binders.RawBody
 {
     public class EmptyTask
     {

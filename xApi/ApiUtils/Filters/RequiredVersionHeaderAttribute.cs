@@ -9,7 +9,7 @@ using System.Web.Http.Filters;
 using System.Web.Http.Results;
 using xApi.Data.Helpers;
 
-namespace xApi.Filters
+namespace xApi.ApiUtils.Filters
 {
     public class RequiredVersionHeaderAttribute : ActionFilterAttribute
     {
