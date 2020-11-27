@@ -241,3 +241,7 @@ D:\C#Projects\connectalrs\xApi\obj\Debug\xApi.csproj.CoreCompileInputs.cache
 D:\C#Projects\connectalrs\xApi\obj\Debug\xApi.csproj.CopyComplete
 D:\C#Projects\connectalrs\xApi\obj\Debug\xApi.dll
 D:\C#Projects\connectalrs\xApi\obj\Debug\xApi.pdb
+D:\xapilrsC#\LRS\xApi\obj\Debug\xApi.csprojAssemblyReference.cache
+D:\xapilrsC#\LRS\xApi\obj\Debug\xApi.csproj.CoreCompileInputs.cache
+D:\xapilrsC#\LRS\xApi\obj\Debug\xApi.dll
+D:\xapilrsC#\LRS\xApi\obj\Debug\xApi.pdb
