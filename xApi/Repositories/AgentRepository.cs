@@ -9,7 +9,8 @@ namespace xApi.Repositories
     public class AgentRepository
     {
 
-       Person getPerson(Agent agent)
+        public AgentRepository() { }
+      public Person GetPerson(Agent agent)
         {
             var person = new Person(agent);
             return person;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using xApi.Data.Json.Exceptions;
 
 namespace xApi.Data.Json
 {

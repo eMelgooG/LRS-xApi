@@ -153,6 +153,7 @@
     <Compile Include="Data\Json\ApiJsonSerializer.cs" />
     <Compile Include="Data\Json\Exceptions\InvalidTokenTypeException.cs" />
     <Compile Include="Data\Json\Exceptions\JsonModelException.cs" />
+    <Compile Include="Data\Json\Exceptions\JsonStringException.cs" />
     <Compile Include="Data\Json\Exceptions\JsonTokenModelException.cs" />
     <Compile Include="Data\Json\Exceptions\UnexpectedObjectTypeException.cs" />
     <Compile Include="Data\Json\JsonModel.cs" />

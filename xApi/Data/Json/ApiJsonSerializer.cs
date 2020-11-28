@@ -32,4 +32,3 @@ namespace xApi.Data.Json
         }
     }
 }
-}
