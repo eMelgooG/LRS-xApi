@@ -12,28 +12,32 @@ namespace xApi.ApiUtils.Binders
     {
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {
+             if (bindingContext.ModelType != typeof(Iri))
+            {
+                return false;
+            }
             var modelName = bindingContext.ModelName;
             var valueProviderResult =
                bindingContext.ValueProvider.GetValue(modelName);
             if (valueProviderResult == null)
             {
-                return true;
+                return false;
             }
             bindingContext.ModelState.SetModelValue(modelName, valueProviderResult);
-
+            var val = valueProviderResult.RawValue as string;
             try
             {
-                var agent = (Agent)valueProviderResult.RawValue;
+                var agent = new Agent(valueProviderResult.RawValue as string);
                 bindingContext.Model = agent;
                 return true;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                bindingContext.ModelState.AddModelError("Error:", new ArgumentException());
+                bindingContext.ModelState.AddModelError(modelName,ex);
                 return false;
             }
 
-            return true;
+            return false;
         }
     }
 }

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.ModelBinding;
+using xApi.ApiUtils.Binders;
 using xApi.Data.Exceptions;
 using xApi.Data.Helpers;
 using xApi.Data.Interfaces;
@@ -14,6 +16,7 @@ namespace xApi.Data
     /// <summary>
     /// An Agent (an individual) is a persona or system.
     /// </summary>
+    [ModelBinder(typeof(AgentModelBinder))]
     public class Agent : StatementObjectBase, IInverseFunctionalIdentifiers, IAgent, IStatementObject
     {
         /// <summary>
