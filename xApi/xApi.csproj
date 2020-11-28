@@ -128,6 +128,7 @@
     <Compile Include="ApiUtils\Binders\IriModelBinder.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\AgentProfileController.cs" />
+    <Compile Include="Controllers\AgentsController.cs" />
     <Compile Include="Controllers\StateProfileController.cs" />
     <Compile Include="Data\Account.cs" />
     <Compile Include="Data\Activity.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Data\LanguageMap.cs" />
     <Compile Include="Data\Mbox.cs" />
     <Compile Include="Data\ObjectType.cs" />
+    <Compile Include="Data\Person.cs" />
     <Compile Include="Data\ResultFormat.cs" />
     <Compile Include="Data\Results\DocumentResult.cs" />
     <Compile Include="Data\Results\DocumentsResult.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ActivityRepository.cs" />
     <Compile Include="Repositories\AgentProfileRepository.cs" />
+    <Compile Include="Repositories\AgentRepository.cs" />
     <Compile Include="Repositories\StateProfileRepository.cs" />
   </ItemGroup>
   <ItemGroup>
