@@ -12,7 +12,7 @@ namespace xApi.ApiUtils.Binders
     {
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {
-             if (bindingContext.ModelType != typeof(Iri))
+             if (bindingContext.ModelType != typeof(Agent))
             {
                 return false;
             }
@@ -27,7 +27,7 @@ namespace xApi.ApiUtils.Binders
             var val = valueProviderResult.RawValue as string;
             try
             {
-                var agent = new Agent(valueProviderResult.RawValue as string);
+                var agent = new Agent(val as string);
                 bindingContext.Model = agent;
                 return true;
             }

@@ -18,6 +18,7 @@ namespace xApi.Controllers
         }
 
         [HttpGet]
+        [HttpHead]
         public IHttpActionResult Get(Agent agent = null)
         {
             if (!ModelState.IsValid)

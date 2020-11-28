@@ -57,8 +57,11 @@ namespace xApi.Data
             {
                 throw new ArgumentException("Groups are not allowed within an Person Object.");
             }
-
-            if (agent.Account != null)
+            if (agent.Name != null)
+            {
+                Name.Add(agent.Name);
+            }
+                if (agent.Account != null)
             {
                 Account.Add(agent.Account);
                 return;
