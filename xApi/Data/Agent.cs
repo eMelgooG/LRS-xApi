@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using FluentValidation.Attributes;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using xApi.Data.Helpers;
 using xApi.Data.Interfaces;
 using xApi.Data.Json;
 using xApi.Data.Json.Exceptions;
+using xApi.Data.Validators;
 
 namespace xApi.Data
 {
@@ -17,6 +19,7 @@ namespace xApi.Data
     /// An Agent (an individual) is a persona or system.
     /// </summary>
     [ModelBinder(typeof(AgentModelBinder))]
+    [Validator(typeof(AgentValidator))]
     public class Agent : StatementObjectBase, IInverseFunctionalIdentifiers, IAgent, IStatementObject
     {
         /// <summary>

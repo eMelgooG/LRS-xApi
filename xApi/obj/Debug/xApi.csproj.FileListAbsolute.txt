@@ -333,3 +333,9 @@ D:\C#\LRS\xApi\bin\System.Web.Http.xml
 D:\C#\LRS\xApi\bin\System.Web.Http.WebHost.xml
 D:\C#\LRS\xApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\C#\LRS\xApi\obj\Debug\xApi.csproj.CopyComplete
+D:\C#\LRS\xApi\bin\FluentValidation.dll
+D:\C#\LRS\xApi\bin\FluentValidation.ValidatorAttribute.dll
+D:\C#\LRS\xApi\bin\FluentValidation.WebApi.dll
+D:\C#\LRS\xApi\bin\System.ComponentModel.Annotations.dll
+D:\C#\LRS\xApi\bin\FluentValidation.xml
+D:\C#\LRS\xApi\bin\FluentValidation.WebApi.xml

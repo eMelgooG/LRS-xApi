@@ -182,6 +182,8 @@
     <Compile Include="Data\StatementObjectBase.cs" />
     <Compile Include="Data\StatementRef.cs" />
     <Compile Include="Data\SubStatement.cs" />
+    <Compile Include="Data\Validators\AccountValidator.cs" />
+    <Compile Include="Data\Validators\AgentValidatior.cs" />
     <Compile Include="Repositories\ActivityProfileRepository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BasicAuthentication\Filters\HttpAuthenticationChallengeContextExtensions.cs" />
