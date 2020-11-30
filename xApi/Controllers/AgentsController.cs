@@ -17,8 +17,8 @@ namespace xApi.Controllers
             _agentRepository = new AgentRepository();
         }
 
+        
         [HttpGet]
-        [HttpHead]
         public IHttpActionResult Get(Agent agent = null)
         {
             if (!ModelState.IsValid)
