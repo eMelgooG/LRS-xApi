@@ -16,7 +16,7 @@ namespace xApi.Repositories
     {
         public const string GetActivityIdQuery = "SELECT TOP 1 id from dbo.Activity "
                 + "WHERE activity_iri = @activityId ;";
-        public const string GetProfileIdQuery = "SELECT TOP 1 doc_content, doc_content_type, doc_last_modified from dbo.ActivityProfile "
+        public const string GetProfileIdQuery = "SELECT TOP 1 doc_content, doc_content_type, doc_last_modified, doc_checksum from dbo.ActivityProfile "
                 + "WHERE profile_id = @profileId " +
                    "AND activity_id = @id ;";
 
@@ -66,9 +66,8 @@ int z = 1;
                         return null;
                     }
                     var profileDoc = new ActivityProfileDocument();
-                    if (!reader.IsDBNull(0)) {
-                        profileDoc.Content = (byte[])reader[0];
-                    }
+
+                    profileDoc.Content = DbUtils.GetBytes(reader, 0);
                     if (!reader.IsDBNull(1))
                     {
                         profileDoc.ContentType = (string)reader[1];
@@ -76,6 +75,10 @@ int z = 1;
                     if (!reader.IsDBNull(2))
                     {
                         profileDoc.LastModified = (DateTimeOffset)reader[2];
+                    }
+                    if (!reader.IsDBNull(3))
+                    {
+                        profileDoc.Tag = reader.GetString(3);
                     }
 
                     reader.Close();
