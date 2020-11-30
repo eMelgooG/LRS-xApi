@@ -138,6 +138,7 @@
   <ItemGroup>
     <Compile Include="ApiUtils\Binders\AgentModelBinder.cs" />
     <Compile Include="ApiUtils\Binders\IriModelBinder.cs" />
+    <Compile Include="ApiUtils\DbUtils.cs" />
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\AgentProfileController.cs" />
     <Compile Include="Controllers\AgentsController.cs" />
