@@ -19,7 +19,6 @@ namespace xApi.Data
     /// An Agent (an individual) is a persona or system.
     /// </summary>
     [ModelBinder(typeof(AgentModelBinder))]
-    [Validator(typeof(AgentValidator))]
     public class Agent : StatementObjectBase, IInverseFunctionalIdentifiers, IAgent, IStatementObject
     {
         /// <summary>

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using FluentValidation.WebApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.ModelBinding;
 using xApi.Data;
+using xApi.Data.Validators;
 
 namespace xApi.ApiUtils.Binders
 {
@@ -28,6 +30,16 @@ namespace xApi.ApiUtils.Binders
             try
             {
                 var agent = new Agent(val as string);
+                var validator = new AgentValidator();
+
+                //fluent validation
+                var results = validator.Validate(agent);
+                if (!results.IsValid)
+                {
+                    results.AddToModelState(bindingContext.ModelState, null);
+                    return false;
+                }
+
                 bindingContext.Model = agent;
                 return true;
             }
