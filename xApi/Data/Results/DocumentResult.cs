@@ -25,10 +25,13 @@ namespace xApi.Data.Results
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new ByteArrayContent(_profile.Content);
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue(_profile.ContentType);
+   
+             response.Content = _profile.Content!=null? new ByteArrayContent(_profile.Content) : new ByteArrayContent(new byte[0]);  
+            response.Content.Headers.ContentType = _profile.ContentType!=null ? new MediaTypeHeaderValue(_profile.ContentType) : null;
             response.Content.Headers.LastModified = _profile.LastModified;
-            response.Content.Headers.Add("ETag", $"'{_profile.Tag}'");
+            EntityTagHeaderValue etag;
+            etag = new EntityTagHeaderValue("\"" + Guid.NewGuid().ToString() + "\"");
+            response.Headers.ETag = etag;
             return Task.FromResult(response);
         }
     }
