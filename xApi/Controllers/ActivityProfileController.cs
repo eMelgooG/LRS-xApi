@@ -162,9 +162,10 @@ namespace xApi.Controllers
                         return StatusCode(statusCode);
                     }
                 }
+                //overwrite
             }
 
-            //create or overwrite
+            //create 
             activityProfileRepository.saveProfile(newDocument);
        return StatusCode(HttpStatusCode.NoContent);
         }
