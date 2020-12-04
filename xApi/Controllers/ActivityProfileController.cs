@@ -161,12 +161,16 @@ namespace xApi.Controllers
                         }
                         return StatusCode(statusCode);
                     }
+                    //overwrite
+                    oldDocument.UpdateDocument(newDocument.Content, newDocument.ContentType);
+                    activityProfileRepository.OverwriteProfile(oldDocument);
+                    return StatusCode(HttpStatusCode.NoContent);
                 }
-                //overwrite
+
             }
 
             //create 
-            activityProfileRepository.saveProfile(newDocument);
+            activityProfileRepository.SaveProfile(newDocument);
        return StatusCode(HttpStatusCode.NoContent);
         }
 

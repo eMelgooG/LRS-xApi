@@ -17,7 +17,7 @@ namespace xApi.Repositories
     {
         public const string GetActivityIdQuery = "SELECT TOP 1 id from dbo.Activity "
                 + "WHERE activity_iri = @activityId ;";
-        public const string GetProfileIdQuery = "SELECT TOP 1 doc_content, doc_content_type, doc_last_modified, doc_checksum from dbo.ActivityProfile "
+        public const string GetProfileIdQuery = "SELECT TOP 1 * from dbo.ActivityProfile "
                 + "WHERE profile_id = @profileId " +
                    "AND activity_id = @id ;";
         public const string GetProfilesIdsQuery = "SELECT profile_id, doc_last_modified from dbo.ActivityProfile "
@@ -29,6 +29,9 @@ namespace xApi.Repositories
         public const string CreateActivityProfileQuery = "INSERT INTO dbo.ActivityProfile "
  + "(profile_id, activity_id,doc_content_type,doc_content,doc_checksum,doc_last_modified,doc_created) "
     + "VALUES (@v1,@v2,@v3,@v4,@v5,@v6,@v7);";
+        public const string UpdateActivityProfileQuery = "UPDATE dbo.ActivityProfile "
+        + "SET doc_content_type = @ctt, doc_content = @ct, doc_checksum = @cks, doc_last_modified = @lm "
+            + "WHERE id = @id;"; 
 
         /*     string jsonStr = "{\r\n    \"name\": \"13d2dfc9-04cf-44f9-832-f53c04c6dcfe\",\r\n    \"location\": {\r\n                \"name\": \"5b6f1721-b9-4bc1-8ec5-87363da5be38\"\r\n    },\r\n    \"2e0618a7-c1d9-43f5-b9ed-201c6f1d08a5\": \"aed267b8-93ba-42e3-bffc-a20a3151d7a0\"\r\n}";
 Dictionary<String,Object> dic = JsonConvert.DeserializeObject<Dictionary<String, Object>>(jsonStr);
@@ -129,7 +132,34 @@ int z = 1;
             result[0] = listResult.Select(i => i.ProfileId).ToList();
             return result;
         }
-        public void saveProfile(ActivityProfileDocument document)
+
+        public void OverwriteProfile(ActivityProfileDocument document)
+        {
+            using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    // Create the activity               
+                    SqlCommand command = new SqlCommand(UpdateActivityProfileQuery, connection);
+                    command.Parameters.AddWithValue("@ctt", document.ContentType);
+                    command.Parameters.AddWithValue("@ct", document.Content);
+                    command.Parameters.AddWithValue("@cks", document.Checksum);
+                    command.Parameters.AddWithValue("@lm", document.LastModified);
+                    command.Parameters.AddWithValue("@id", document.Id);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+  
+                }
+            }
+        }
+        public void SaveProfile(ActivityProfileDocument document)
         {
             int index = GetActivityId(document.ActivityId);
             //If activity doesn't exist we have to create it
@@ -140,7 +170,7 @@ int z = 1;
             CreateProfile(index, document);
 
         }
-        public void mergeProfiles(ActivityProfileDocument newDocument, ActivityProfileDocument oldDocument)
+        public void mergeProfiles(ActivityProfileDocument newDocument,ActivityProfileDocument oldDocument)
         {
 
         }
@@ -198,18 +228,30 @@ int z = 1;
                     {
                         profileDoc = new ActivityProfileDocument();
 
-                        profileDoc.Content = DbUtils.GetBytes(reader, 0);
+                        if (!reader.IsDBNull(0))
+                        {
+                            profileDoc.Id = (int)reader[0];
+                        }
                         if (!reader.IsDBNull(1))
                         {
-                            profileDoc.ContentType = (string)reader[1];
+                            profileDoc.ProfileId = (string)reader[1];
                         }
-                        if (!reader.IsDBNull(2))
+ /*                       if (!reader.IsDBNull(2))
                         {
-                            profileDoc.LastModified = (DateTimeOffset)reader[2];
-                        }
+                            profileDoc.ActivityId = (int)reader[2];
+                        }*/
                         if (!reader.IsDBNull(3))
                         {
-                            profileDoc.Tag = reader.GetString(3);
+                            profileDoc.ContentType = (string)reader[3];
+                        }
+                        profileDoc.Content = DbUtils.GetBytes(reader, 4);
+                        if (!reader.IsDBNull(5))
+                        {
+                            profileDoc.Checksum = reader.GetString(5);
+                        }
+                        if (!reader.IsDBNull(6))
+                        {
+                            profileDoc.LastModified = (DateTimeOffset)reader[6];
                         }
                         return profileDoc;
                     }

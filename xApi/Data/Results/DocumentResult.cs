@@ -29,7 +29,7 @@ namespace xApi.Data.Results
              response.Content = _profile.Content!=null? new ByteArrayContent(_profile.Content) : new ByteArrayContent(new byte[0]);  
             response.Content.Headers.ContentType = _profile.ContentType!=null ? new MediaTypeHeaderValue(_profile.ContentType) : null;
             response.Content.Headers.LastModified = _profile.LastModified;
-            EntityTagHeaderValue etag = new EntityTagHeaderValue("\"" + _profile.Tag + "\"");
+            EntityTagHeaderValue etag = new EntityTagHeaderValue("\"" + _profile.Checksum + "\"");
             response.Headers.ETag = etag;
             return Task.FromResult(response);
         }
