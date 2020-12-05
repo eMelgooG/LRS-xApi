@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 
 namespace xApi.Data.Documents
@@ -70,6 +72,25 @@ namespace xApi.Data.Documents
         {
             this.Content = content;
             this.ContentType = contentType;
+            this.LastModified = DateTimeOffset.UtcNow;
+            Checksum = this.GenerateChecksum();
+        }
+        //Merge documents if both have app/json
+        public void MergeDocument(Document postedDoc)
+        {
+            //deserialize objects
+            Dictionary<String, Object> doc = Helpers.Helpers.ParseJsonByteArrayToDictionary(this.Content);
+            Dictionary<String, Object> posted = Helpers.Helpers.ParseJsonByteArrayToDictionary(postedDoc.Content);
+            foreach (KeyValuePair<string, object> entry in posted)
+            {
+                doc[entry.Key] = entry.Value;
+                }
+            //serialize the object to JSON
+            var json = JsonConvert.SerializeObject(doc);
+            //to byte array
+            var bytes = Encoding.UTF8.GetBytes(json);
+            //update the document with the new values
+            this.Content = bytes;
             this.LastModified = DateTimeOffset.UtcNow;
             Checksum = this.GenerateChecksum();
         }

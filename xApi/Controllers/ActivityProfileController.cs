@@ -142,9 +142,8 @@ namespace xApi.Controllers
                     {
                         return StatusCode(statusCode);
                     }
-
-                    activityProfileRepository.mergeProfiles(newDocument, oldDocument);
-
+                    oldDocument.MergeDocument(newDocument);
+                    activityProfileRepository.OverwriteProfile(oldDocument);
                     return StatusCode(HttpStatusCode.NoContent);
                 }
 

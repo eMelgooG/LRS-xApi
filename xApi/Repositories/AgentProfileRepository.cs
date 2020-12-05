@@ -29,15 +29,10 @@ namespace xApi.Repositories
                 return result;
             }
 
-            public void saveProfile(AgentProfileDocument document)
-            {
+        public void saveProfile(AgentProfileDocument document)
+        {
 
-            }
-
-            public void mergeProfiles(AgentProfileDocument newDocument, AgentProfileDocument oldDocument)
-            {
-
-            }
+        }
 
             public void DeleteProfile(AgentProfileDocument profile)
             {

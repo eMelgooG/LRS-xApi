@@ -118,7 +118,8 @@ namespace xApi.Controllers
                         return StatusCode(statusCode);
                     }
 
-                    agentProfileRepository.mergeProfiles(newDocument, oldDocument);
+                    oldDocument.MergeDocument(newDocument);
+                    //overwrite
 
                     return StatusCode(HttpStatusCode.NoContent);
                 }
