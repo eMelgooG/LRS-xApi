@@ -35,7 +35,6 @@ namespace xApi.BasicAuthentication.Results
                     response.Headers.WwwAuthenticate.Add(Challenge);
                 }
             }
-
             return response;
         }
     }

@@ -35,7 +35,7 @@ namespace xApi.Data
                 throw new MboxFormatException($"'{email}' is not a valid e-mail.");
             }
 
-            _mbox = value;
+            _mbox = email;
         }
 
         public override string ToString()

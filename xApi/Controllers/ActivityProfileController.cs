@@ -26,7 +26,7 @@ namespace xApi.Controllers
     /// <param name="profileId"></param>
     /// <returns>200 OK, the Profile document</returns>
     [Route("xapi/activities/profile")]
-    public class ActivityProfileController : ApiController
+    public class ActivityProfileController : XapiBaseController
     {
         private ActivityProfileRepository activityProfileRepository;
         public ActivityProfileController()
@@ -52,7 +52,6 @@ namespace xApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             if (activityId == null)
             {
                 return BadRequest("ActivityId parameter needs to be provided.");
@@ -93,7 +92,11 @@ namespace xApi.Controllers
             [FromUri] Iri activityId=null,
            [FromUri] string profileId=null)
         {
-            if(activityId==null)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (activityId==null)
             {
                 return BadRequest("Missing parameter activityId");
             }
@@ -101,11 +104,6 @@ namespace xApi.Controllers
             {
                 return BadRequest("Missing parameter profileId");
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             string contenttype = null;
             if (this.Request.Content.Headers.Contains(RequiredContentTypeHeaderAttribute.CONTENT_TYPE))
             {

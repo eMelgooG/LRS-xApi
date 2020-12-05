@@ -167,6 +167,46 @@ namespace xApi.Data
         {
             return !(agent1 == agent2);
         }
+
+        public string GetIfiTypeName()
+        {
+            if (this.Mbox != null)
+            {
+                return nameof(Mbox);
+            }
+            if (this.Mbox_SHA1SUM != null)
+            {
+                return nameof(Mbox);
+            }
+            if (this.Account != null)
+            {
+                return nameof(this.Account);
+            }
+            if (this.OpenId != null)
+            {
+                return nameof(this.OpenId);
+            }
+            return null;
+        }
+        public string GetIfi() {
+            if (this.Mbox != null)
+            {
+                return Mbox.ToString();
+            }
+            if (this.Mbox_SHA1SUM != null)
+            {
+                return Mbox_SHA1SUM;
+            }
+            if (this.Account != null)
+            {
+                return this.Account.ToJson();
+            }
+            if (this.OpenId != null)
+            {
+                return OpenId._iriString;
+            }
+            return null;
+        }
     }
 
 }

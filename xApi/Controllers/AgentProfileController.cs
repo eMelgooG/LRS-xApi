@@ -14,7 +14,7 @@ using xApi.Repositories;
 namespace xApi.Controllers
 {
     [Route("xapi/agents/profile")]
-    public class AgentProfileController : XapiBaseController
+    public class AgentProfileController : ApiController
     {
         private AgentProfileRepository agentProfileRepository;
         public AgentProfileController()
@@ -29,15 +29,14 @@ namespace xApi.Controllers
              string profileId = null,
              DateTimeOffset? since = null)
         {
-            if (agent == null)
-            {
-                return BadRequest("Agent object needs to be provided.");
-            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            if (agent == null)
+            {
+                return BadRequest("Agent object needs to be provided.");
+            }
             if (profileId != null)
             {
                 AgentProfileDocument profile = agentProfileRepository.GetProfile(agent, profileId);
@@ -68,6 +67,10 @@ namespace xApi.Controllers
              [FromUri] Agent agent = null,
             [FromUri] string profileId = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (agent == null)
             {
                 return BadRequest("Missing parameter agent");
@@ -75,10 +78,6 @@ namespace xApi.Controllers
             if (profileId == null)
             {
                 return BadRequest("Missing parameter profileId");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
             }
 
             string contenttype = null;
@@ -119,8 +118,7 @@ namespace xApi.Controllers
                     }
 
                     oldDocument.MergeDocument(newDocument);
-                    //overwrite
-
+                    agentProfileRepository.OverwriteProfile(oldDocument);
                     return StatusCode(HttpStatusCode.NoContent);
                 }
 
@@ -137,11 +135,15 @@ namespace xApi.Controllers
                         }
                         return StatusCode(statusCode);
                     }
+                    //overwrite
+                    oldDocument.UpdateDocument(newDocument.Content, newDocument.ContentType);
+                    agentProfileRepository.OverwriteProfile(oldDocument);
+                    return StatusCode(HttpStatusCode.NoContent);
                 }
             }
 
-            //create or overwrite
-            agentProfileRepository.saveProfile(newDocument);
+            //create 
+            agentProfileRepository.SaveProfile(newDocument);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
