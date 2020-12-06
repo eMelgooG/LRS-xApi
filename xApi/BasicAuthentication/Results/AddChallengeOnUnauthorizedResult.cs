@@ -36,6 +36,6 @@ namespace xApi.BasicAuthentication.Results
                 }
             }
             return response;
-        }
+            }
     }
 }

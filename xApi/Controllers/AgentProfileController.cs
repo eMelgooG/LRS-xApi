@@ -14,7 +14,7 @@ using xApi.Repositories;
 namespace xApi.Controllers
 {
     [Route("xapi/agents/profile")]
-    public class AgentProfileController : ApiController
+    public class AgentProfileController : XapiBaseController
     {
         private AgentProfileRepository agentProfileRepository;
         public AgentProfileController()

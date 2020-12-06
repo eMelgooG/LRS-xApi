@@ -13,6 +13,7 @@ namespace xApi.Data.Documents
         public StateProfileDocument()
         {
         }
+        public int Id { get; set; }
         public string StateId { get; set; }
         public Iri Activity { get; set; }
         public Agent Agent { get; set; }

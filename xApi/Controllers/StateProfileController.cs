@@ -14,7 +14,7 @@ using xApi.Repositories;
 namespace xApi.Controllers
 {
     [Route("xapi/activities/state")]
-    public class StateProfileController : XapiBaseController
+    public class StateProfileController : ApiController
     {
         private StateProfileRepository stateProfileRepository;
         public StateProfileController()
@@ -30,6 +30,10 @@ namespace xApi.Controllers
            Guid? registration = null,
             DateTimeOffset? since = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (agent == null)
             {
                 return BadRequest("Agent object needs to be provided.");
@@ -39,15 +43,12 @@ namespace xApi.Controllers
             {
                 return BadRequest("ActivityId parameter is missing.");
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            StateProfileDocument profile = new StateProfileDocument { Activity = activityId, Agent = agent, StateId = stateId, Registration = registration };
+            StateProfileDocument mock = new StateProfileDocument { Activity = activityId, Agent = agent, StateId = stateId, Registration = registration };
+            StateProfileDocument profile = null;
             if (stateId != null)
             {
-                profile = stateProfileRepository.GetProfile(profile);
+                profile = stateProfileRepository.GetProfile(mock);
                 if (profile == null)
                 {
                     return NotFound();
@@ -55,7 +56,7 @@ namespace xApi.Controllers
                 return new DocumentResult(profile);
             }
 
-            Object[] profiles = stateProfileRepository.GetProfiles(profile, since);
+            Object[] profiles = stateProfileRepository.GetProfiles(mock, since);
             if (profiles == null)
             {
                 return Ok(new string[0]);
