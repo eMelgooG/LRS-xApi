@@ -16,10 +16,10 @@ namespace xApi.Controllers
     [Route("xapi/activities/state")]
     public class StateProfileController : ApiController
     {
-        private StateProfileRepository stateProfileRepository;
+        private StateProfileRepository _stateProfileRepository;
         public StateProfileController()
         {
-            stateProfileRepository = new StateProfileRepository();
+            _stateProfileRepository = new StateProfileRepository();
         }
 
         [HttpGet]
@@ -48,7 +48,7 @@ namespace xApi.Controllers
             StateProfileDocument profile = null;
             if (stateId != null)
             {
-                profile = stateProfileRepository.GetProfile(mock);
+                profile = _stateProfileRepository.GetProfile(mock);
                 if (profile == null)
                 {
                     return NotFound();
@@ -56,7 +56,7 @@ namespace xApi.Controllers
                 return new DocumentResult(profile);
             }
 
-            Object[] profiles = stateProfileRepository.GetProfiles(mock, since);
+            Object[] profiles = _stateProfileRepository.GetProfiles(mock, since);
             if (profiles == null)
             {
                 return Ok(new string[0]);
@@ -74,6 +74,10 @@ namespace xApi.Controllers
           [FromUri] string stateId = null,
            [FromUri] Guid? registration = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (agent == null)
             {
                 return BadRequest("Missing parameter agent");
@@ -86,11 +90,6 @@ namespace xApi.Controllers
             {
                 return BadRequest("Missing parameter activityId");
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             string contenttype = null;
             if (this.Request.Content.Headers.Contains(RequiredContentTypeHeaderAttribute.CONTENT_TYPE))
             {
@@ -106,7 +105,7 @@ namespace xApi.Controllers
                 Activity = activityId
             };
 
-            var oldDocument = stateProfileRepository.GetProfile(newDocument);
+            var oldDocument = _stateProfileRepository.GetProfile(newDocument);
 
             if (oldDocument != null)
             {
@@ -123,13 +122,13 @@ namespace xApi.Controllers
                         return BadRequest("Couldn't merge. The content-type needs to be application/json for both documents to be merged");
                     }
 
-                    stateProfileRepository.mergeProfiles(newDocument, oldDocument);
-
+                    oldDocument.MergeDocument(newDocument);
+                    _stateProfileRepository.OverwriteProfile(oldDocument);
                     return StatusCode(HttpStatusCode.NoContent);
                 } 
             }
             //create or overwrite
-            stateProfileRepository.saveProfile(newDocument);
+            _stateProfileRepository.saveProfile(newDocument);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -164,17 +163,17 @@ namespace xApi.Controllers
             //delete single document
             if (stateId != null)
             {
-                profile = stateProfileRepository.GetProfile(profile);
+                profile = _stateProfileRepository.GetProfile(profile);
                 if (profile == null)
                 {
                     return NotFound();
                 }
-                stateProfileRepository.DeleteProfile(profile);
+                _stateProfileRepository.DeleteProfile(profile);
                 return StatusCode(HttpStatusCode.NoContent);
             }
             
             //delete multiple documents
-            stateProfileRepository.DeleteProfiles(profile,since);
+            _stateProfileRepository.DeleteProfiles(profile,since);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }

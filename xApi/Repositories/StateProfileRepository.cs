@@ -19,6 +19,9 @@ namespace xApi.Repositories
    +   "WHERE agent_id = @agentId " +
        "AND activity_id = @activityId " +
       "{0};";
+        public const string UpdateStateProfileQuery = "UPDATE dbo.StateProfile "
++ "SET doc_content_type = @ctt, doc_content = @ct, doc_checksum = @cks, doc_last_modified = @lm "
+    + "WHERE id = @id;";
         public const string RegistrationQuery = "AND registration_id = @regId ";
         private readonly AgentProfileRepository _agentProfileRepository;
         private readonly ActivityProfileRepository _activityProfileRepository;
@@ -120,7 +123,7 @@ namespace xApi.Repositories
                 SqlCommand command = null;
                 if (state.Registration != null)
                 {
-                    command = new SqlCommand(String.Format(GetStateProfilesQuery, RegistrationQuery), connection);
+                    command = new SqlCommand(String.Format(GetStateProfilesQuery, RegistrationQuery ), connection);
                     command.Parameters.AddWithValue("@regId", state.Registration);
                 }
                 else
@@ -176,19 +179,45 @@ namespace xApi.Repositories
             return result;
         }
 
-        public void saveProfile(StateProfileDocument document)
+        void OverwriteProfile(StateProfileDocument document)
+        {
+            using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    // Create the activity               
+                    SqlCommand command = new SqlCommand(UpdateStateProfileQuery, connection);
+                    command.Parameters.AddWithValue("@ctt", document.ContentType);
+                    command.Parameters.AddWithValue("@ct", document.Content);
+                    command.Parameters.AddWithValue("@cks", document.Checksum);
+                    command.Parameters.AddWithValue("@lm", document.LastModified);
+                    command.Parameters.AddWithValue("@id", document.Id);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+
+                }
+            }
+        }
+    }
+
+        public void SaveProfile(StateProfileDocument document)
         {
 
         }
-        public void mergeProfiles(StateProfileDocument newDocument, StateProfileDocument oldDocument)
+        public void MergeProfiles(StateProfileDocument newDocument, StateProfileDocument oldDocument)
         {
 
         }
 
         public void DeleteProfile(StateProfileDocument profile)
         {
-
-            throw new NotImplementedException();
         }
         public void DeleteProfiles(StateProfileDocument profile, DateTimeOffset? since)
         {
