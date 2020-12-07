@@ -152,6 +152,10 @@ namespace xApi.Controllers
            [FromUri] Agent agent = null,
             string profileId = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (agent == null)
             {
                 return BadRequest("Agent parameter needs to be provided.");
@@ -160,15 +164,10 @@ namespace xApi.Controllers
             {
                 return BadRequest("ProfileId parameter needs to be provided.");
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             AgentProfileDocument profile = agentProfileRepository.GetProfile(agent, profileId);
             if (profile == null)
             {
-                return NotFound();
+                return StatusCode(HttpStatusCode.NoContent);
             }
             else
             {

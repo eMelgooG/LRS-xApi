@@ -31,7 +31,9 @@ namespace xApi.Repositories
     + "VALUES (@v1,@v2,@v3,@v4,@v5,@v6,@v7);";
         public const string UpdateActivityProfileQuery = "UPDATE dbo.ActivityProfile "
         + "SET doc_content_type = @ctt, doc_content = @ct, doc_checksum = @cks, doc_last_modified = @lm "
-            + "WHERE id = @id;"; 
+            + "WHERE id = @id;";
+        public const string DeleteSingleActivityProfileQuery = "DELETE FROM dbo.ActivityProfile " +
+"WHERE id = @id;";
 
         /*     
 
@@ -166,7 +168,22 @@ namespace xApi.Repositories
         }
         public void DeleteProfile(ActivityProfileDocument profile)
         {
-            throw new NotImplementedException();
+            if (profile == null) return;
+            using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
+            {
+                SqlCommand command = null;
+                command = new SqlCommand(DeleteSingleActivityProfileQuery, connection);
+                command.Parameters.AddWithValue("@id", profile.Id);
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
         public int CreateActivity(Iri activity)
         {

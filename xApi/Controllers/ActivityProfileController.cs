@@ -176,6 +176,10 @@ namespace xApi.Controllers
             Iri activityId = null,
             string profileId = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (activityId == null)
             {
                 return BadRequest("ActivityId parameter needs to be provided.");
@@ -184,16 +188,11 @@ namespace xApi.Controllers
             {
                 return BadRequest("ProfileId parameter needs to be provided.");
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
                 ActivityProfileDocument profile = activityProfileRepository.GetProfile(activityId, profileId);
                 if (profile == null)
                 {
-                    return NotFound();
-                } else
+                return StatusCode(HttpStatusCode.NoContent);
+            } else
             {
                 if(this.ActionContext.TryConcurrencyCheck(profile.Checksum,profile.LastModified, out var statusCode)) {
                     return StatusCode(statusCode);

@@ -33,6 +33,8 @@ namespace xApi.Repositories
         public const string UpdateAgentProfileQuery = "UPDATE dbo.AgentProfile "
         + "SET doc_content_type = @ctt, doc_content = @ct, doc_checksum = @cks, doc_last_modified = @lm "
             + "WHERE id = @id;";
+        public const string DeleteSingleAgentProfileQuery = "DELETE FROM dbo.AgentProfile " +
+    "WHERE id = @id;";
 
         public AgentProfileDocument GetProfile(Agent agent, string profileId)
         {
@@ -152,7 +154,22 @@ namespace xApi.Repositories
         }
         public void DeleteProfile(AgentProfileDocument profile)
         {
-            throw new NotImplementedException();
+            if (profile == null) return;
+            using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
+            {
+                SqlCommand command = null;
+                command = new SqlCommand(DeleteSingleAgentProfileQuery, connection);
+                command.Parameters.AddWithValue("@id", profile.Id);
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
         public int CreateAgent(Agent agent)
         {

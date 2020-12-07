@@ -21,6 +21,10 @@ namespace xApi.Controllers
         public IHttpActionResult GetActivity(
               [FromUri] Uri activityId = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (activityId == null)
             {
                 return BadRequest("ActivityId parameter required.");
