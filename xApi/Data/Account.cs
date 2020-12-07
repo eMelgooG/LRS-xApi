@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,11 +45,14 @@ namespace xApi.Data
         /// <summary>
         /// The canonical home page for the system the account is on. This is based on FOAF's accountServiceHomePage.
         /// </summary>
+        /// 
+       /* [JsonProperty("homePage")]*/
         public Uri HomePage { get; set; }
 
         /// <summary>
         /// The unique id or name used to log in to this account. This is based on FOAF's accountName.
         /// </summary>
+         /* [JsonProperty("name")]*/
         public string Name { get; set; }
 
         /// <summary>
