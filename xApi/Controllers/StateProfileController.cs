@@ -143,9 +143,12 @@ namespace xApi.Controllers
             Iri activityId = null,
             Agent agent = null,
           [FromUri] string stateId = null,
-           [FromUri] Guid? registration = null,
-           DateTimeOffset? since = null)
+           [FromUri] Guid? registration = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (agent == null)
             {
                 return BadRequest("Agent parameter needs to be provided.");
@@ -154,32 +157,24 @@ namespace xApi.Controllers
             {
                 return BadRequest("ProfileId parameter needs to be provided.");
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var profile = new StateProfileDocument()
+            var mock = new StateProfileDocument()
             {
                 Activity = activityId,
                 Agent = agent,
                 StateId = stateId,
                 Registration = registration
             };
-
+            StateProfileDocument profile = null;
             //delete single document
             if (stateId != null)
             {
-                profile = _stateProfileRepository.GetProfile(profile);
-                if (profile == null)
-                {
-                    return NotFound();
-                }
+               profile = _stateProfileRepository.GetProfile(mock);
                 _stateProfileRepository.DeleteProfile(profile);
                 return StatusCode(HttpStatusCode.NoContent);
             }
             
             //delete multiple documents
-            _stateProfileRepository.DeleteProfiles(profile,since);
+            _stateProfileRepository.DeleteProfiles(mock);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }

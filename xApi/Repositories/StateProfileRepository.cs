@@ -25,6 +25,15 @@ namespace xApi.Repositories
         public const string CreateStateProfileQuery = "INSERT INTO dbo.StateProfile "
 + "(state_id, activity_id, agent_id, registration_id, doc_content_type,doc_content,doc_checksum,doc_last_modified,doc_created) "
 + "VALUES (@v1,@v2,@v3,@v4,@v5,@v6,@v7,@v8,@v9);";
+        public const string DeleteMultipleProfilesQuery = "DELETE FROM dbo.StateProfile " +
+            "WHERE activity_id = @actId " +
+            "AND agent_id = @agentId " +
+            "{0};";
+        public const string DeleteSingleProfileQuery = "DELETE FROM dbo.StateProfile " +
+            "WHERE activity_id = @actId " +
+            "AND agent_id = @agentId " +
+            "AND state_id = @stateId " +
+            "{0};";
         public const string RegistrationQuery = "AND registration_id = @regId ";
         private readonly AgentProfileRepository _agentProfileRepository;
         private readonly ActivityProfileRepository _activityProfileRepository;
@@ -252,11 +261,66 @@ namespace xApi.Repositories
         }
         public void DeleteProfile(StateProfileDocument profile)
         {
+            if (profile == null) return;
+            var agentIndex = _agentProfileRepository.GetAgentId(profile.Agent);
+            if (agentIndex == -1) return;
+            var activityIndex = _activityProfileRepository.GetActivityId(profile.Activity);
+            if (activityIndex == -1) return;
+            using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
+            {
+                SqlCommand command = null;
+                if (profile.Registration != null)
+                {
+                    command = new SqlCommand(String.Format(DeleteSingleProfileQuery, RegistrationQuery), connection);
+                    command.Parameters.AddWithValue("@regId", profile.Registration);
+                }
+                else
+                {
+                    command = new SqlCommand(String.Format(DeleteMultipleProfilesQuery, ""), connection);
+                }
+                command.Parameters.AddWithValue("@actId", activityIndex);
+                command.Parameters.AddWithValue("@agentId", agentIndex);
+                command.Parameters.AddWithValue("@stateId", profile.StateId);
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
-        public void DeleteProfiles(StateProfileDocument profile, DateTimeOffset? since)
+        public void DeleteProfiles(StateProfileDocument profile)
         {
+            var agentIndex = _agentProfileRepository.GetAgentId(profile.Agent);
+            if (agentIndex == -1) return;
+            var activityIndex = _activityProfileRepository.GetActivityId(profile.Activity);
+            if (activityIndex == -1) return;
+            using(SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
+            {
+                SqlCommand command = null;
+                if(profile.Registration!=null)
+                {
+                    command = new SqlCommand(String.Format(DeleteMultipleProfilesQuery, RegistrationQuery), connection);
+                    command.Parameters.AddWithValue("@regId", profile.Registration);
+                } else
+                {
+                    command = new SqlCommand(String.Format(DeleteMultipleProfilesQuery, ""), connection);
+                }
+                command.Parameters.AddWithValue("@actId", activityIndex);
+                command.Parameters.AddWithValue("@agentId", agentIndex);
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                } catch (Exception ex)
+                {
 
+                }
+            }
         }
-
+      
     }
 }
