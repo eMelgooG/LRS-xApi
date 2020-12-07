@@ -125,10 +125,16 @@ namespace xApi.Controllers
                     oldDocument.MergeDocument(newDocument);
                     _stateProfileRepository.OverwriteProfile(oldDocument);
                     return StatusCode(HttpStatusCode.NoContent);
-                } 
+                }
+                else if (this.Request.Method.Equals(HttpMethod.Put))
+                {
+                    oldDocument.UpdateDocument(newDocument.Content, newDocument.ContentType);
+                    _stateProfileRepository.OverwriteProfile(oldDocument);
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
             }
-            //create or overwrite
-            _stateProfileRepository.saveProfile(newDocument);
+            //create
+            _stateProfileRepository.SaveProfile(newDocument);
             return StatusCode(HttpStatusCode.NoContent);
         }
 

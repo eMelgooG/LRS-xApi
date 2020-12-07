@@ -22,6 +22,9 @@ namespace xApi.Repositories
         public const string UpdateStateProfileQuery = "UPDATE dbo.StateProfile "
 + "SET doc_content_type = @ctt, doc_content = @ct, doc_checksum = @cks, doc_last_modified = @lm "
     + "WHERE id = @id;";
+        public const string CreateStateProfileQuery = "INSERT INTO dbo.StateProfile "
++ "(state_id, activity_id, agent_id, registration_id, doc_content_type,doc_content,doc_checksum,doc_last_modified,doc_created) "
++ "VALUES (@v1,@v2,@v3,@v4,@v5,@v6,@v7,@v8,@v9);";
         public const string RegistrationQuery = "AND registration_id = @regId ";
         private readonly AgentProfileRepository _agentProfileRepository;
         private readonly ActivityProfileRepository _activityProfileRepository;
@@ -108,7 +111,6 @@ namespace xApi.Repositories
             }
             return profileDoc;
         }
-
         public object[] GetProfiles(StateProfileDocument state, DateTimeOffset? since)
         {
             var result = new Object[2];
@@ -178,8 +180,7 @@ namespace xApi.Repositories
             result[0] = listResult.Select(i => i.StateId).ToList();
             return result;
         }
-
-        void OverwriteProfile(StateProfileDocument document)
+       public void OverwriteProfile(StateProfileDocument document)
         {
             using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
             {
@@ -205,17 +206,50 @@ namespace xApi.Repositories
                 }
             }
         }
-    }
-
         public void SaveProfile(StateProfileDocument document)
         {
-
+            int agentIndex = _agentProfileRepository.GetAgentId(document.Agent);
+            //If agent doesn't exist we have to create it
+            if (agentIndex == -1)
+            {
+                agentIndex = _agentProfileRepository.CreateAgent(document.Agent);
+            }
+            int activityIndex = _activityProfileRepository.GetActivityId(document.Activity);
+            if (agentIndex == -1)
+            {
+                activityIndex = _activityProfileRepository.CreateActivity(document.Activity);
+            }
+            CreateProfile(agentIndex, activityIndex,document);
         }
-        public void MergeProfiles(StateProfileDocument newDocument, StateProfileDocument oldDocument)
+        public void CreateProfile(int agent, int activity, StateProfileDocument doc)
         {
+            using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
+            {
+                // get activity
+                SqlCommand command = new SqlCommand(CreateStateProfileQuery, connection);
+                command.Parameters.AddRange(new[]
+    {
+        new SqlParameter("@v1", doc.StateId),
+          new SqlParameter("@v2", activity),
+        new SqlParameter("@v3", agent),
+         new SqlParameter("@v4", doc.Registration),
+         new SqlParameter("@v5", doc.ContentType),
+          new SqlParameter("@v6", doc.Content),
+           new SqlParameter("@v7", doc.Checksum),
+            new SqlParameter("@v8", doc.LastModified),
+             new SqlParameter("@v9", doc.CreateDate),
+    });
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
 
+                }
+            }
         }
-
         public void DeleteProfile(StateProfileDocument profile)
         {
         }

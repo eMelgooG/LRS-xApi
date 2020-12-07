@@ -176,7 +176,6 @@ namespace xApi.Repositories
                 }
                 catch (Exception ex)
                 {
-
                 }
                 finally
                 {
