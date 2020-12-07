@@ -30,10 +30,7 @@ namespace xApi.Repositories
             "AND agent_id = @agentId " +
             "{0};";
         public const string DeleteSingleProfileQuery = "DELETE FROM dbo.StateProfile " +
-            "WHERE activity_id = @actId " +
-            "AND agent_id = @agentId " +
-            "AND state_id = @stateId " +
-            "{0};";
+            "WHERE id = @id;";
         public const string RegistrationQuery = "AND registration_id = @regId ";
         private readonly AgentProfileRepository _agentProfileRepository;
         private readonly ActivityProfileRepository _activityProfileRepository;
@@ -232,6 +229,7 @@ namespace xApi.Repositories
         }
         public void CreateProfile(int agent, int activity, StateProfileDocument doc)
         {
+
             using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
             {
                 // get activity
@@ -241,7 +239,7 @@ namespace xApi.Repositories
         new SqlParameter("@v1", doc.StateId),
           new SqlParameter("@v2", activity),
         new SqlParameter("@v3", agent),
-         new SqlParameter("@v4", doc.Registration),
+         new SqlParameter("@v4", doc.Registration ?? (object)DBNull.Value),
          new SqlParameter("@v5", doc.ContentType),
           new SqlParameter("@v6", doc.Content),
            new SqlParameter("@v7", doc.Checksum),
@@ -262,25 +260,11 @@ namespace xApi.Repositories
         public void DeleteProfile(StateProfileDocument profile)
         {
             if (profile == null) return;
-            var agentIndex = _agentProfileRepository.GetAgentId(profile.Agent);
-            if (agentIndex == -1) return;
-            var activityIndex = _activityProfileRepository.GetActivityId(profile.Activity);
-            if (activityIndex == -1) return;
             using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
             {
                 SqlCommand command = null;
-                if (profile.Registration != null)
-                {
-                    command = new SqlCommand(String.Format(DeleteSingleProfileQuery, RegistrationQuery), connection);
-                    command.Parameters.AddWithValue("@regId", profile.Registration);
-                }
-                else
-                {
-                    command = new SqlCommand(String.Format(DeleteMultipleProfilesQuery, ""), connection);
-                }
-                command.Parameters.AddWithValue("@actId", activityIndex);
-                command.Parameters.AddWithValue("@agentId", agentIndex);
-                command.Parameters.AddWithValue("@stateId", profile.StateId);
+                command = new SqlCommand(DeleteSingleProfileQuery, connection);
+                command.Parameters.AddWithValue("@id", profile.Id);
                 try
                 {
                     connection.Open();
