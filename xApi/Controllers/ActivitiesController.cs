@@ -35,13 +35,14 @@ namespace xApi.Controllers
                 return Ok(new Activity());
             }
 
+            ResultFormat format = ResultFormat.Canonical;
 /*            ResultFormat format = ResultFormat.Exact;
             if (this.Request.Headers.AcceptLanguage != null && this.Request.Headers.AcceptLanguage.Count > 0)
             {
                 format = ResultFormat.Canonical;
             }*/
 
-            return Ok(activity);
+            return Ok(activity.ToJson(format));
 
         }
     }
