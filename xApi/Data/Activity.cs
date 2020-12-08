@@ -3,9 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using xApi.Data.Exceptions;
 using xApi.Data.Helpers;
+using xApi.Data.InteractionTypes;
 using xApi.Data.Interfaces;
 using xApi.Data.Json;
+using xApi.Data.Json.Exceptions;
 
 namespace xApi.Data
 {
@@ -105,5 +108,4 @@ namespace xApi.Data
             return !(activity1 == activity2);
         }
     }
-}
 }
