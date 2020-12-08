@@ -158,7 +158,9 @@
     <Compile Include="Data\Exceptions\ObjectTypeException.cs" />
     <Compile Include="Data\Extensions\StringExtensions.cs" />
     <Compile Include="Data\Group.cs" />
+    <Compile Include="Data\Helpers\CultureHelper.cs" />
     <Compile Include="Data\Helpers\Helpers.cs" />
+    <Compile Include="Data\Interfaces\IActivity.cs" />
     <Compile Include="Data\Interfaces\IAgent.cs" />
     <Compile Include="Data\Interfaces\IInverseFunctionalIdentifiers.cs" />
     <Compile Include="Data\Interfaces\IStatementObject.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="Data\Json\Exceptions\UnexpectedObjectTypeException.cs" />
     <Compile Include="Data\Json\JsonModel.cs" />
     <Compile Include="Data\Json\JsonString.cs" />
+    <Compile Include="Data\Json\LanguageTagException.cs" />
     <Compile Include="Data\LanguageMap.cs" />
     <Compile Include="Data\Mbox.cs" />
     <Compile Include="Data\ObjectType.cs" />

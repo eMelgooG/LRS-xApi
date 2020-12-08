@@ -1,14 +1,19 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
+using xApi.Data.Helpers;
+using xApi.Data.Json;
 
 namespace xApi.Data
 {
-    public class LanguageMap : IDictionary<string,string>
+    public class LanguageMap : JsonModel, IDictionary<string, string>
     {
         private IDictionary<string, string> _values = new Dictionary<string, string>();
+
         public LanguageMap() { }
         public LanguageMap(IEnumerable<KeyValuePair<string, string>> values)
         {
@@ -16,6 +21,54 @@ namespace xApi.Data
             {
                 Add(item);
             }
+        }
+
+        /// <exception cref="LanguageTagException" />
+        public LanguageMap(JsonString jsonString) : this(jsonString.ToJToken(), ApiVersion.GetLatest()) { }
+
+        /// <exception cref="LanguageTagException" />
+        public LanguageMap(JToken languageMap, ApiVersion version)
+        {
+            GuardType(languageMap, JTokenType.Object);
+
+            foreach (var item in (JObject)languageMap)
+            {
+                GuardType(item.Value, JTokenType.String);
+
+                if (!CultureHelper.IsValidCultureName(item.Key))
+                {
+                    throw new LanguageTagException(languageMap, item.Key);
+                }
+
+                //if (ContainsKey(item.Key))
+                //{
+                //    throw new LanguageMapKeyException();
+                //}
+
+                Add(item.Key, item.Value.Value<string>());
+            }
+        }
+
+        public override JToken ToJToken(ApiVersion version, ResultFormat format)
+        {
+            var obj = new JObject();
+            foreach (var pair in this)
+            {
+                if (format == ResultFormat.Canonical)
+                {
+                    if (pair.Key == CultureInfo.CurrentCulture.Name)
+                    {
+                        obj[pair.Key] = pair.Value;
+                        break;
+                    }
+                    continue;
+                }
+                else
+                {
+                    obj[pair.Key] = pair.Value;
+                }
+            }
+            return obj;
         }
 
         #region Implementation

@@ -10,7 +10,7 @@ using xApi.Repositories;
 namespace xApi.Controllers
 {
     [Route("xapi/activities")]
-    public class ActivitiesController : XapiBaseController
+    public class ActivitiesController : ApiController
     {
         private ActivityRepository activityRepository;
         public ActivitiesController()
@@ -19,7 +19,7 @@ namespace xApi.Controllers
         }
         [HttpGet]
         public IHttpActionResult GetActivity(
-              [FromUri] Uri activityId = null)
+              [FromUri] Iri activityId = null)
         {
             if (!ModelState.IsValid)
             {
