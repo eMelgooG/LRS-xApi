@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using xApi.ApiUtils;
 using xApi.Data;
+using xApi.Data.Helpers;
 using xApi.Data.InteractionTypes;
 
 namespace xApi.Repositories
@@ -41,7 +42,7 @@ namespace xApi.Repositories
         private ActivityDefinition GetActivityDefinition(int index)
         {
             int interactionIndex = -1;
-            StringBuilder sb = new StringBuilder("");
+            ActivityDefinition activityDefinition = null;
             using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
             {
 
@@ -54,35 +55,31 @@ namespace xApi.Repositories
                     reader = command.ExecuteReader();
                     if (reader.Read())
                     {
+                        activityDefinition = new ActivityDefinition();
                         if (!reader.IsDBNull(6))
                         {
                             interactionIndex = reader.GetInt32(6);
                         }
                         if (!reader.IsDBNull(1))
                         {
-                                sb.Append("\"name\":");
-                            sb.Append(reader.GetString(1));
-                            sb.Append(",");
+                      activityDefinition.Name = new LanguageMap(reader.GetString(1));
+                            
                         }
                         if (!reader.IsDBNull(2))
                         {
-                            sb.Append("\"description\":");
-                            sb.Append(reader.GetString(2));
-                            sb.Append(",");
+                            activityDefinition.Description = new LanguageMap(reader.GetString(2));
                         }
                         if (!reader.IsDBNull(3))
                         {
-                            sb.Append("\"type\":");
-                            sb.Append("\"" + reader.GetString(3) + "\"");
-                            sb.Append(",");
+                            activityDefinition.Type = new Iri(reader.GetString(3));
                         }
                         if (!reader.IsDBNull(4))
                         {
-                            definition.moreInfo = new Uri(reader.GetString(4));
+                            activityDefinition.MoreInfo = new Uri(reader.GetString(4));
                         }
                         if (!reader.IsDBNull(5))
                         {
-                            definition.extensions = new ExtensionsDictionary(reader.GetString(5));
+                            activityDefinition.Extensions = new ExtensionsDictionary(reader.GetString(5));
                         }
                     }
                 }
@@ -100,13 +97,14 @@ namespace xApi.Repositories
             }
             if (interactionIndex!=-1)
             {
-                GetActivityInteraction(interactionIndex, definition);
+             var interactionDef = GetActivityInteraction(interactionIndex);
             }
-            return new ActivityDefinition(definition.toString());
+            return activityDefinition;
         }
 
-        private void GetActivityInteraction(int interactionIndex,dynamic definition)
+        private ActivityDefinition GetActivityInteraction(int interactionIndex)
         {
+            ActivityDefinition interactionDef = null;
             using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
             {
 
@@ -119,7 +117,8 @@ namespace xApi.Repositories
                     reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        definition.interactionType = reader.GetString(1);
+                        InteractionType type = reader.GetString(1);
+                        interactionDef = type.CreateInstance("", ApiVersion.GetLatest());
                         if (!reader.IsDBNull(2))
                         {
                         definition.correctResponsesPattern = new InteractionComponentCollection(reader.GetString(2));
@@ -140,7 +139,7 @@ namespace xApi.Repositories
                 }
                 catch (Exception ex)
                 {
-                    return;
+                    return null;
                 }
                 finally
                 {
