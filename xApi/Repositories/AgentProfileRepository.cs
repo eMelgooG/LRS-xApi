@@ -16,24 +16,24 @@ namespace xApi.Repositories
             {
 
             }
-        public const string GetAgentIdQuery = "SELECT TOP 1 id from dbo.Agent "
+        private const string GetAgentIdQuery = "SELECT TOP 1 id from dbo.Agent "
         + "WHERE {0} = @IFI ;";
-        public const string GetAgentProfileIdQuery = "SELECT TOP 1 * from dbo.AgentProfile "
+        private const string GetAgentProfileIdQuery = "SELECT TOP 1 * from dbo.AgentProfile "
                 + "WHERE profile_id = @profileId " +
                    "AND agent_id = @id ;";
-        public const string GetProfilesIdsQuery = "SELECT profile_id, doc_last_modified from dbo.AgentProfile "
+        private const string GetProfilesIdsQuery = "SELECT profile_id, doc_last_modified from dbo.AgentProfile "
                + "WHERE agent_id = @id;";
-        public const string CreateAgentQuery = "INSERT INTO dbo.Agent "
+        private const string CreateAgentQuery = "INSERT INTO dbo.Agent "
          + "(name,{0}) "
             + "OUTPUT inserted.id "
             + "VALUES (@name, @IFI);";
-        public const string CreateAgentProfileQuery = "INSERT INTO dbo.AgentProfile "
+        private const string CreateAgentProfileQuery = "INSERT INTO dbo.AgentProfile "
  + "(profile_id, agent_id,doc_content_type,doc_content,doc_checksum,doc_last_modified,doc_created) "
     + "VALUES (@v1,@v2,@v3,@v4,@v5,@v6,@v7);";
-        public const string UpdateAgentProfileQuery = "UPDATE dbo.AgentProfile "
+        private const string UpdateAgentProfileQuery = "UPDATE dbo.AgentProfile "
         + "SET doc_content_type = @ctt, doc_content = @ct, doc_checksum = @cks, doc_last_modified = @lm "
             + "WHERE id = @id;";
-        public const string DeleteSingleAgentProfileQuery = "DELETE FROM dbo.AgentProfile " +
+        private const string DeleteSingleAgentProfileQuery = "DELETE FROM dbo.AgentProfile " +
     "WHERE id = @id;";
 
         public AgentProfileDocument GetProfile(Agent agent, string profileId)

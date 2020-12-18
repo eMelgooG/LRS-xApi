@@ -44,7 +44,7 @@ namespace xApi.Repositories
         {
             StateProfileDocument result = null;
             int agentId = _agentProfileRepository.GetAgentId(profile.Agent);
-            int activityId = _activityProfileRepository.GetActivityId(profile.Activity);
+            int activityId = _activityProfileRepository.GetActivityId(profile.Activity)[0];
             if(agentId!=-1 && activityId !=-1)
             {
                 result = GetStateProfileDocument(agentId, activityId, profile.StateId, profile.Registration);
@@ -121,7 +121,7 @@ namespace xApi.Repositories
         {
             var result = new Object[2];
             var listResult = new List<StateProfileDocument>();
-            var actId = _activityProfileRepository.GetActivityId(state.Activity);
+            var actId = _activityProfileRepository.GetActivityId(state.Activity)[0];
             if (actId == -1) return null;
             var agentId = _agentProfileRepository.GetAgentId(state.Agent);
             if (agentId == -1) return null;
@@ -220,7 +220,7 @@ namespace xApi.Repositories
             {
                 agentIndex = _agentProfileRepository.CreateAgent(document.Agent);
             }
-            int activityIndex = _activityProfileRepository.GetActivityId(document.Activity);
+            int activityIndex = _activityProfileRepository.GetActivityId(document.Activity)[0];
             if (agentIndex == -1)
             {
                 activityIndex = _activityProfileRepository.CreateActivity(document.Activity);
@@ -280,7 +280,7 @@ namespace xApi.Repositories
         {
             var agentIndex = _agentProfileRepository.GetAgentId(profile.Agent);
             if (agentIndex == -1) return;
-            var activityIndex = _activityProfileRepository.GetActivityId(profile.Activity);
+            var activityIndex = _activityProfileRepository.GetActivityId(profile.Activity)[0];
             if (activityIndex == -1) return;
             using(SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
             {

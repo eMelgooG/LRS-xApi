@@ -29,7 +29,7 @@ namespace xApi.Controllers
             {
                 return BadRequest("ActivityId parameter required.");
             }
-            var activity = activityRepository.getActivity(activityId);
+            var activity = activityRepository.GetActivity(activityId);
             if (activity == null)
             {
                 return Ok(new Activity());

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using xApi.Data.Helpers;
 using xApi.Data.Json;
@@ -26,6 +27,15 @@ namespace xApi.Data.InteractionTypes
                 }
                 CorrectResponsesPattern = stringList.ToArray();
             }
+        }
+
+
+        //we use this cotr to pull data from DB without validation
+        public InteractionActivityDefinitionBase(string jsonString) 
+        {
+            var list = JsonConvert.DeserializeObject<List<string>>(jsonString);
+            CorrectResponsesPattern = list.ToArray();
+            
         }
 
         public override Iri Type { get => new Iri("http://adlnet.gov/expapi/activities/cmi.interaction"); set => base.Type = value; }

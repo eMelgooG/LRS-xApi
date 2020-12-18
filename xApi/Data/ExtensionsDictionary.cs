@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace xApi.Data
 {
     public class ExtensionsDictionary : JsonModel, IDictionary<Uri, JToken>
     {
-        private readonly IDictionary<Uri, JToken> _values = new Dictionary<Uri, JToken>();
+        private IDictionary<Uri, JToken> _values = new Dictionary<Uri, JToken>();
 
         public ExtensionsDictionary()
         {
@@ -47,6 +48,18 @@ namespace xApi.Data
             }
         }
 
+        // use this constructor to parse json from DB, without validation
+        public ExtensionsDictionary(string jsonString) { 
+            var extensions = JsonConvert.DeserializeObject<JToken>(jsonString);
+            if (extensions is JObject @object)
+            {
+                var properties = @object.Properties();
+                foreach (var token in properties)
+                {
+                    Add(new Uri(token.Name), token.Value);
+                }
+            }
+        }
         public int Count => _values.Count;
 
         public bool IsReadOnly => _values.IsReadOnly;

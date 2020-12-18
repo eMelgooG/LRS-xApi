@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -71,6 +72,12 @@ namespace xApi.Data
             return obj;
         }
 
+        // use this constructor to parse json from DB, without validation
+        public LanguageMap(string jsonString)
+        {
+            var vals = JsonConvert.DeserializeObject<IDictionary<string, string>>(jsonString);
+            this._values = vals;
+        }
         #region Implementation
         public string this[string key] { get => _values[key]; set => _values[key] = value; }
 

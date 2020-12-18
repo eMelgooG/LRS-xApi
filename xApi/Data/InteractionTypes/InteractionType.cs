@@ -79,6 +79,52 @@ namespace xApi.Data.InteractionTypes
 
             throw new NotImplementedException("interactionType");
         }
+        public ActivityDefinition CreateInstanceNoValidation()
+        {
+            if (Type == typeof(Choice))
+            {
+                return new Choice();
+            }
+
+            else if (Type == typeof(FillIn))
+            {
+                return new FillIn();
+            }
+            else if (Type == typeof(Likert))
+            {
+                return new Likert();
+            }
+            else if (Type == typeof(LongFillIn))
+            {
+                return new LongFillIn();
+            }
+            else if (Type == typeof(Matching))
+            {
+                return new Matching();
+            }
+            else if (Type == typeof(Numeric))
+            {
+                return new Numeric();
+            }
+            else if (Type == typeof(Performance))
+            {
+                return new Performance();
+            }
+            else if (Type == typeof(Sequencing))
+            {
+                return new Sequencing();
+            }
+            else if (Type == typeof(TrueFalse))
+            {
+                return new TrueFalse();
+            }
+            else if (Type == typeof(Other))
+            {
+                return new Other();
+            }
+
+            throw new NotImplementedException("interactionType");
+        }
         public override bool Equals(object obj)
         {
             return obj is InteractionType type &&

@@ -15,24 +15,24 @@ namespace xApi.Repositories
 {
     public class ActivityProfileRepository
     {
-        public const string GetActivityIdQuery = "SELECT TOP 1 id from dbo.Activity "
+        private const string GetActivityIdQuery = "SELECT TOP 1 id, activity_definition_id from dbo.Activity "
                 + "WHERE activity_iri = @activityId ;";
-        public const string GetProfileIdQuery = "SELECT TOP 1 * from dbo.ActivityProfile "
+        private const string GetProfileIdQuery = "SELECT TOP 1 * from dbo.ActivityProfile "
                 + "WHERE profile_id = @profileId " +
                    "AND activity_id = @id ;";
-        public const string GetProfilesIdsQuery = "SELECT profile_id, doc_last_modified from dbo.ActivityProfile "
+        private const string GetProfilesIdsQuery = "SELECT profile_id, doc_last_modified from dbo.ActivityProfile "
                + "WHERE activity_id = @id;";
-        public const string CreateActivityQuery = "INSERT INTO dbo.Activity "
+        private const string CreateActivityQuery = "INSERT INTO dbo.Activity "
          + "(activity_iri) "
             + "OUTPUT inserted.id "
             + "VALUES (@activity_id);";
-        public const string CreateActivityProfileQuery = "INSERT INTO dbo.ActivityProfile "
+        private const string CreateActivityProfileQuery = "INSERT INTO dbo.ActivityProfile "
  + "(profile_id, activity_id,doc_content_type,doc_content,doc_checksum,doc_last_modified,doc_created) "
     + "VALUES (@v1,@v2,@v3,@v4,@v5,@v6,@v7);";
-        public const string UpdateActivityProfileQuery = "UPDATE dbo.ActivityProfile "
+        private const string UpdateActivityProfileQuery = "UPDATE dbo.ActivityProfile "
         + "SET doc_content_type = @ctt, doc_content = @ct, doc_checksum = @cks, doc_last_modified = @lm "
             + "WHERE id = @id;";
-        public const string DeleteSingleActivityProfileQuery = "DELETE FROM dbo.ActivityProfile " +
+        private const string DeleteSingleActivityProfileQuery = "DELETE FROM dbo.ActivityProfile " +
 "WHERE id = @id;";
 
         /*     
@@ -45,7 +45,7 @@ namespace xApi.Repositories
         public ActivityProfileDocument GetProfile(Iri activityId, string profileId)
         {
             ActivityProfileDocument document = null;
-            int index = this.GetActivityId(activityId);
+            int index = this.GetActivityId(activityId)[0];
             if (index != -1)
             {
                 document = GetActivityProfileDocument(index, profileId);
@@ -157,7 +157,7 @@ namespace xApi.Repositories
         }
         public void SaveProfile(ActivityProfileDocument document)
         {
-            int index = GetActivityId(document.ActivityId);
+            int index = GetActivityId(document.ActivityId)[0];
             //If activity doesn't exist we have to create it
             if (index == -1)
             {
@@ -276,9 +276,11 @@ namespace xApi.Repositories
             }
             return profileDoc;
         }
-        public int GetActivityId(Iri activity)
+        public int[] GetActivityId(Iri activity)
         {
+            int[] result = new int[2];
             int index = -1;
+            int definitionIndex = -1;
             using (SqlConnection connection = new SqlConnection(DbUtils.GetConnectionString()))
             {
                 // get activity
@@ -292,6 +294,9 @@ namespace xApi.Repositories
                     if (reader.Read())
                     {
                         index = reader.GetInt32(0);
+                        if (!reader.IsDBNull(1)) {
+                            definitionIndex = reader.GetInt32(1);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -307,7 +312,9 @@ namespace xApi.Repositories
                     }
                 }
             }
-            return index;
+            result[0] = index;
+            result[1] = definitionIndex;
+            return result;
 
         }
         public void CreateProfile(int activityId, ActivityProfileDocument doc)
