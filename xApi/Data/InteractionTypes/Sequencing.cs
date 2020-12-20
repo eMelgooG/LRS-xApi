@@ -13,6 +13,6 @@ namespace xApi.Data.InteractionTypes
 
         protected override InteractionType INTERACTION_TYPE => InteractionType.Sequencing;
 
-        public InteractionComponent[] Choices { get; set; }
+        public InteractionComponentCollection Choices { get; set; }
     }
 }
