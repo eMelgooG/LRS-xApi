@@ -23,11 +23,25 @@ namespace xApi.Data.InteractionTypes
                 Target = new InteractionComponentCollection(jobj.Value<JArray>("target"), version);
             }
         }
+        public override JToken ToJToken(ApiVersion version, ResultFormat format)
+        {
+            var obj = base.ToJToken(version, format);
+            if (this.Source != null)
+            {
+                obj["source"] = Source.ToJToken(version, format);
+            }
+            if (this.Target != null)
+            {
+                obj["target"] = Target.ToJToken(version, format);
+            }
+            return obj;
+        }
 
-        [JsonProperty("source")]
+
+        /*   [JsonProperty("source")]*/
         public InteractionComponentCollection Source { get; set; }
 
-        [JsonProperty("target")]
+    /*    [JsonProperty("target")]*/
         public InteractionComponentCollection Target { get; set; }
     }
 }

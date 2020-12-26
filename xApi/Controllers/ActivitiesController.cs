@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -35,15 +37,20 @@ namespace xApi.Controllers
                 return Ok(new Activity());
             }
 
-            ResultFormat format = ResultFormat.Canonical;
-/*            ResultFormat format = ResultFormat.Exact;
+
+            ResultFormat format = ResultFormat.Exact;
             if (this.Request.Headers.AcceptLanguage != null && this.Request.Headers.AcceptLanguage.Count > 0)
             {
                 format = ResultFormat.Canonical;
-            }*/
-
-            return Ok(activity.ToJson(format));
+            }
+            var req = activity.ToJson(format);
+            HttpResponseMessage msg = new HttpResponseMessage()
+            {
+                Content = new StringContent(req, System.Text.Encoding.UTF8, "application/json")
+            };
+            return ResponseMessage(msg);
+        }
 
         }
     }
-}
+

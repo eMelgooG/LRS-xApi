@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace xApi.Data.Json
         public virtual string ToJson(ApiVersion version, ResultFormat format = ResultFormat.Exact)
         {
             return ToJToken(version, format)?.ToString(Newtonsoft.Json.Formatting.None);
+            /*        return JsonConvert.SerializeObject(this);*/
         }
 
         public virtual string ToJson(ResultFormat format = ResultFormat.Exact)

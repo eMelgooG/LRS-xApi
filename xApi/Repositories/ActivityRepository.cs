@@ -126,7 +126,7 @@ namespace xApi.Repositories
                     if (reader.Read())
                     {
                         InteractionType type = reader.GetString(1);
-                        interactionDef = type.CreateInstance("", ApiVersion.GetLatest());
+                        interactionDef = type.CreateInstance(new JObject(), ApiVersion.GetLatest());
                         if (!reader.IsDBNull(2))
                         {
                             JsonString json = reader.GetString(2);
@@ -144,10 +144,10 @@ namespace xApi.Repositories
                             Sequencing seq = interactionDef as Sequencing;
                             if (cho != null)
                             {
-                                cho.Choices = new InteractionComponentCollection(reader.GetString(3), ApiVersion.GetLatest());
+                                cho.Choices = new InteractionComponentCollection(reader.GetString(3));
                             } else if (seq != null)
                             {
-                                seq.Choices = new InteractionComponentCollection(reader.GetString(3), ApiVersion.GetLatest());
+                                seq.Choices = new InteractionComponentCollection(reader.GetString(3));
                             }
 
                         }
@@ -156,7 +156,7 @@ namespace xApi.Repositories
                             Likert def = interactionDef as Likert;
                             if (def != null)
                             {
-                                def.Scale = new InteractionComponentCollection(reader.GetString(4), ApiVersion.GetLatest());
+                                def.Scale = new InteractionComponentCollection(reader.GetString(4));
                             }
                         }
                         if (!reader.IsDBNull(5))
@@ -164,7 +164,7 @@ namespace xApi.Repositories
                             Matching match = interactionDef as Matching;
                             if (match != null)
                             {
-                                match.Source = new InteractionComponentCollection(reader.GetString(5), ApiVersion.GetLatest());
+                                match.Source = new InteractionComponentCollection(reader.GetString(5));
                             }
                         }
                         if (!reader.IsDBNull(6))
@@ -172,7 +172,7 @@ namespace xApi.Repositories
                             Matching match = interactionDef as Matching;
                             if (match != null)
                             {
-                                match.Target = new InteractionComponentCollection(reader.GetString(6), ApiVersion.GetLatest());
+                                match.Target = new InteractionComponentCollection(reader.GetString(6));
                             }
                         }
                         if (!reader.IsDBNull(7))
@@ -180,7 +180,7 @@ namespace xApi.Repositories
                             Performance perf = interactionDef as Performance;
                                 if (perf != null)
                             {
-                                perf.Steps = new InteractionComponentCollection(reader.GetString(7), ApiVersion.GetLatest());
+                                perf.Steps = new InteractionComponentCollection(reader.GetString(7));
                             }
                         }
                     }

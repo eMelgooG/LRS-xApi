@@ -18,17 +18,21 @@ namespace xApi.Data.InteractionTypes
             }
         }
 
+        public override JToken ToJToken(ApiVersion version, ResultFormat format)
+        {
+            var obj = base.ToJToken(version, format);
+            if (this.Scale != null)
+            {
+                obj["scale"] = Scale.ToJToken(version, format);
+            }
+            return obj;
+        }
+
         public Likert(JToken jobj, ApiVersion version) : base(jobj, version)
         {
         }
 
         public InteractionComponentCollection Scale { get; set; }
 
-        public override JToken ToJToken(ApiVersion version, ResultFormat format)
-        {
-            var jobj = base.ToJToken(version, format);
-
-            return jobj;
-        }
     }
 }

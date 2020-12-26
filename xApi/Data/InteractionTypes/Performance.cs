@@ -16,6 +16,15 @@ namespace xApi.Data.InteractionTypes
                 Steps = new InteractionComponentCollection(jobj.Value<JArray>("steps"), version);
             }
         }
+        public override JToken ToJToken(ApiVersion version, ResultFormat format)
+        {
+            var obj = base.ToJToken(version, format);
+            if (this.Steps != null)
+            {
+                obj["steps"] = Steps.ToJToken(version, format);
+            }
+            return obj;
+        }
 
         public InteractionComponentCollection Steps { get; set; }
     }

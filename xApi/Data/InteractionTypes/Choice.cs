@@ -15,6 +15,15 @@ namespace xApi.Data.InteractionTypes
             }
         }
 
+        public override JToken ToJToken(ApiVersion version, ResultFormat format)
+        {
+            var obj = base.ToJToken(version, format);
+            if (this.Choices != null)
+            {
+                obj["choices"] = Choices.ToJToken(version, format);
+            }
+            return obj;
+        }
         public InteractionComponentCollection Choices { get; set; }
     }
 }
