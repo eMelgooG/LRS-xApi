@@ -12,25 +12,34 @@ namespace xApi.Data.Json
 {
     public abstract class JsonModel : JsonModel<JToken>
     {
+        public JsonModel() : base() { }
+
+        public JsonModel(JToken token, ApiVersion version) : base(token, version)
+        {
+        }
     }
 
-    public abstract class JsonModel<TToken> where TToken : JToken
+    public abstract class JsonModel<TToken> 
+        where TToken : JToken
     {
         protected JsonModel() { }
 
         protected JsonModel(TToken token, ApiVersion version) { }
 
         public abstract TToken ToJToken(ApiVersion version, ResultFormat format);
+
         public virtual string ToJson(ApiVersion version, ResultFormat format = ResultFormat.Exact)
         {
             return ToJToken(version, format)?.ToString(Newtonsoft.Json.Formatting.None);
-            /*        return JsonConvert.SerializeObject(this);*/
         }
+
+        public virtual string ToJson() => ToJson(ResultFormat.Exact);
 
         public virtual string ToJson(ResultFormat format = ResultFormat.Exact)
         {
             return ToJson(ApiVersion.GetLatest(), format);
         }
+
         public override bool Equals(object obj)
         {
             return true;
@@ -114,7 +123,6 @@ namespace xApi.Data.Json
             }
         }
 
-
         /// <summary>
         /// Throws an exception when type does not match any of the provided types.
         /// </summary>
@@ -134,8 +142,5 @@ namespace xApi.Data.Json
                 }
             }
         }
-
-
-
     }
 }

@@ -184,7 +184,9 @@
     <Compile Include="Data\InteractionTypes\TrueFalse.cs" />
     <Compile Include="Data\Interfaces\IActivity.cs" />
     <Compile Include="Data\Interfaces\IAgent.cs" />
+    <Compile Include="Data\Interfaces\IAttachmentByHash.cs" />
     <Compile Include="Data\Interfaces\IInverseFunctionalIdentifiers.cs" />
+    <Compile Include="Data\Interfaces\IStatement.cs" />
     <Compile Include="Data\Interfaces\IStatementBase.cs" />
     <Compile Include="Data\Interfaces\IStatementObject.cs" />
     <Compile Include="Data\Interfaces\IStatementRef.cs" />
@@ -210,6 +212,8 @@
     <Compile Include="Data\Score.cs" />
     <Compile Include="Data\SHAHelper.cs" />
     <Compile Include="ApiUtils\Filters\HttpRequestExtensions.cs" />
+    <Compile Include="Data\Statement.cs" />
+    <Compile Include="Data\StatementBase.cs" />
     <Compile Include="Data\StatementObjectBase.cs" />
     <Compile Include="Data\StatementRef.cs" />
     <Compile Include="Data\SubStatement.cs" />
