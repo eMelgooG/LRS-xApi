@@ -9,7 +9,7 @@ namespace xApi.Repositories
 {
     public class StatementRepository
     {
-        public void PutStatement(Guid statementId, Statement statement)
+        public void PutStatement(Guid? statementId, Statement statement)
         {
             statement.Id = statementId;
             

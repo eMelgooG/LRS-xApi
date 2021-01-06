@@ -3,12 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.ModelBinding;
+using xApi.ApiUtils.Binders;
 using xApi.Data.Helpers;
 using xApi.Data.Interfaces;
 using xApi.Data.Json;
 
 namespace xApi.Data
 {
+    [ModelBinder(typeof(StatementModelBinder))]
     public class Statement : StatementBase, IStatement
     {
         public Statement() : base() { }

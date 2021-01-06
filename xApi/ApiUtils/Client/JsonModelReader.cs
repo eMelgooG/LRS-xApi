@@ -22,10 +22,10 @@ namespace xApi.ApiUtils.Client
     public class JsonModelReader
     {
         public readonly Stream Body;
-        public readonly IHeaderDictionary Headers;
+        public readonly HttpContentHeaders Headers;
         public MediaTypeHeaderValue ContentType { get; }
 
-        public JsonModelReader(IHeaderDictionary headers, Stream bodyStream)
+        public JsonModelReader(HttpContentHeaders headers, Stream bodyStream)
         {
             Headers = headers;
             Body = bodyStream;
@@ -157,9 +157,9 @@ namespace xApi.ApiUtils.Client
 
         private MediaTypeHeaderValue GetContentType()
         {
-            if (Headers.TryGetValue("Content-Type", out StringValues values))
+            if (Headers.TryGetValues("Content-Type", out IEnumerable<string> values))
             {
-                return ParseContentType(values);
+                return ParseContentType(values.FirstOrDefault());
             }
 
             throw new JsonModelReaderException("Content-Type header was not found");

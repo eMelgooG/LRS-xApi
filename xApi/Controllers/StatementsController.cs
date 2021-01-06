@@ -9,7 +9,7 @@ using xApi.Repositories;
 
 namespace xApi.Controllers
 {
-   
+
     [Route("xapi/statements")]
     public class StatementsController : ApiController
     {
@@ -19,9 +19,15 @@ namespace xApi.Controllers
             _statementRepository = new StatementRepository();
         }
 
+
+        //create a RequestModel that encapsulates both the statement and the statementId, so you don't deserialize the Statement before checking if the statementId is null
         [HttpPut]
-        public IHttpActionResult PutStatement([FromUri] Guid statementId, Statement statement)
+        public IHttpActionResult PutStatement(Statement statement,[FromUri] Guid? statementId=null)
         {
+            if(statementId == null)
+            {
+                return BadRequest("You need to provide a valid Guid as a statementId");
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

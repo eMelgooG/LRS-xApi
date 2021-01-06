@@ -19,4 +19,3 @@ namespace xApi.Data.Http
         }
     }
 }
-}

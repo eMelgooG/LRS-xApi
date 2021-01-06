@@ -339,3 +339,17 @@ D:\C#\LRS\xApi\bin\FluentValidation.WebApi.dll
 D:\C#\LRS\xApi\bin\System.ComponentModel.Annotations.dll
 D:\C#\LRS\xApi\bin\FluentValidation.xml
 D:\C#\LRS\xApi\bin\FluentValidation.WebApi.xml
+D:\C#\LRS\xApi\bin\Microsoft.AspNetCore.Http.Features.dll
+D:\C#\LRS\xApi\bin\Microsoft.AspNetCore.WebUtilities.dll
+D:\C#\LRS\xApi\bin\Microsoft.Extensions.Primitives.dll
+D:\C#\LRS\xApi\bin\Microsoft.Net.Http.Headers.dll
+D:\C#\LRS\xApi\bin\System.IO.Pipelines.dll
+D:\C#\LRS\xApi\bin\System.Text.Encodings.Web.dll
+D:\C#\LRS\xApi\bin\System.Threading.Tasks.Extensions.dll
+D:\C#\LRS\xApi\bin\Microsoft.AspNetCore.Http.Features.xml
+D:\C#\LRS\xApi\bin\Microsoft.AspNetCore.WebUtilities.xml
+D:\C#\LRS\xApi\bin\Microsoft.Extensions.Primitives.xml
+D:\C#\LRS\xApi\bin\Microsoft.Net.Http.Headers.xml
+D:\C#\LRS\xApi\bin\System.IO.Pipelines.xml
+D:\C#\LRS\xApi\bin\System.Text.Encodings.Web.xml
+D:\C#\LRS\xApi\bin\System.Threading.Tasks.Extensions.xml
