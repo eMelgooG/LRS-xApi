@@ -62,7 +62,7 @@ namespace xApi.BasicAuthentication.Filters
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            if (userName != "manu" || password != "pass")
+            if (userName != "lucaciemanueladrian@gmail.com" || password != "pass")
             {
                 return null;
             }

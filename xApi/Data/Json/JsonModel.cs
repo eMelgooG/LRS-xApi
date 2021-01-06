@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using xApi.Data.Exceptions;
 using xApi.Data.Helpers;
+using xApi.Data.Interfaces;
 using xApi.Data.Json.Exceptions;
 
 namespace xApi.Data.Json
@@ -19,7 +20,7 @@ namespace xApi.Data.Json
         }
     }
 
-    public abstract class JsonModel<TToken> 
+    public abstract class JsonModel<TToken> : IJsonModel
         where TToken : JToken
     {
         protected JsonModel() { }
