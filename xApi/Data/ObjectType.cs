@@ -35,7 +35,7 @@ namespace xApi.Data
                 return new Agent(jsonToken, version);
             }
 
-          /*  else if (Type == typeof(Group))
+            else if (Type == typeof(Group))
             {
                 return new Group(jsonToken, version);
             }
@@ -53,7 +53,7 @@ namespace xApi.Data
             else if (Type == typeof(StatementRef))
             {
                 return new StatementRef(jsonToken, version);
-            }*/
+            }
 
             throw new NotImplementedException("objectType");
         }

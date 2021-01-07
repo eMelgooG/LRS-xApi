@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation.WebApi;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Http.ModelBinding;
 using xApi.ApiUtils.Client;
 using xApi.ApiUtils.Client.Exceptions;
 using xApi.Data;
+using xApi.Data.Validators;
 
 namespace xApi.ApiUtils.Binders
 {
@@ -29,6 +31,13 @@ namespace xApi.ApiUtils.Binders
                 Statement statement =  jsonModelReader.ReadAs<Statement>().GetAwaiter().GetResult();
                 if (statement != null)
                 {
+                    var validator = new StatementValidator();
+                    var results = validator.Validate(statement);
+                    if (!results.IsValid)
+                    {
+                        results.AddToModelState(bindingContext.ModelState, null);
+                        return false;
+                    }
                     bindingContext.Model = statement;
                     return true;
                 }
