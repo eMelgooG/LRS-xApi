@@ -32,8 +32,14 @@ namespace xApi.Controllers
             {
                 return BadRequest(ModelState);
             }
+            if(statement.Id!=null && statement.Id!=statementId)
+            {
+                return BadRequest("Where provided, the 'id' property of the Statement MUST match the 'statementId' parameter of the request");
+            }
 
-             _statementRepository.PutStatement(statementId, statement);
+            if(_statementRepository.PutStatement(statementId, statement, out var statusCode)){
+                return StatusCode(statusCode);
+            }
 
             return StatusCode(HttpStatusCode.NoContent);
         }

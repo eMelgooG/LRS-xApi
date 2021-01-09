@@ -275,6 +275,7 @@
     <Compile Include="Data\Validators\SubStatementValidator.cs" />
     <Compile Include="Data\Validators\VerbValidator.cs" />
     <Compile Include="Data\Verb.cs" />
+    <Compile Include="Domain\StatementEntity.cs" />
     <Compile Include="Repositories\ActivityProfileRepository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BasicAuthentication\Filters\HttpAuthenticationChallengeContextExtensions.cs" />
